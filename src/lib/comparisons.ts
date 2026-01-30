@@ -7,7 +7,7 @@ import {
   GuessResult,
   MatchResult,
 } from '@/types';
-import { ERA_ORDER, LOCATION_REGIONS, MENTIONS_RANGES } from './constants';
+import { ERA_YEARS, LOCATION_REGIONS, MENTIONS_RANGES } from './constants';
 
 export const MATCH_COLORS: Record<MatchResult, string> = {
   exact: 'bg-emerald-500',
@@ -49,15 +49,21 @@ function compareNumber(
 function compareEra(guessEra: string, answerEra: string): MatchResult {
   if (guessEra === answerEra) return 'exact';
 
-  const guessIndex = ERA_ORDER.indexOf(guessEra);
-  const answerIndex = ERA_ORDER.indexOf(answerEra);
+  const guessYear = ERA_YEARS[guessEra];
+  const answerYear = ERA_YEARS[answerEra];
 
   // If either is unknown or not found, no partial
-  if (guessIndex === -1 || answerIndex === -1) return 'wrong';
-  if (guessEra === 'Unknown' || answerEra === 'Unknown') return 'wrong';
+  if (guessYear === null || guessYear === undefined) return 'wrong';
+  if (answerYear === null || answerYear === undefined) return 'wrong';
 
-  // Adjacent era = partial (yellow)
-  if (Math.abs(guessIndex - answerIndex) <= 2) return 'partial';
+  // Calculate year difference
+  const yearDiff = Math.abs(guessYear - answerYear);
+
+  // Within 500 years = partial (yellow) - this covers BCE/CE boundary well
+  if (yearDiff <= 500) return 'partial';
+
+  // Within 1000 years also partial for longer spans
+  if (yearDiff <= 1000) return 'partial';
 
   return 'wrong';
 }

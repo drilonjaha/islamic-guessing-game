@@ -21,22 +21,26 @@ export const PROPHET_ATTRIBUTES = [
   'King',
 ];
 
-// Era ordering for partial matching (adjacent eras = yellow)
-export const ERA_ORDER = [
-  'Beginning of Time',
-  'Pre-history',
-  '2000 BCE',
-  '19th Century BCE',
-  '18th Century BCE',
-  '13th Century BCE',
-  '10th Century BCE',
-  '9th Century BCE',
-  '8th Century BCE',
-  '1st Century BCE',
-  '1st Century CE',
-  '7th Century CE',
-  'Unknown',
-];
+// Era to approximate year mapping for partial matching
+// Negative = BCE, Positive = CE
+export const ERA_YEARS: Record<string, number | null> = {
+  'Beginning of Time': -100000,
+  'Pre-history': -10000,
+  '2000 BCE': -2000,
+  '19th Century BCE': -1850,
+  '18th Century BCE': -1750,
+  '13th Century BCE': -1250,
+  '10th Century BCE': -950,
+  '9th Century BCE': -850,
+  '8th Century BCE': -750,
+  '1st Century BCE': -50,
+  '1st Century CE': 50,
+  '7th Century CE': 650,
+  'Unknown': null,
+};
+
+// Legacy - kept for compatibility
+export const ERA_ORDER = Object.keys(ERA_YEARS).filter(e => e !== 'Unknown');
 
 // Location to region mapping for partial matching (same region = yellow)
 export const LOCATION_REGIONS: Record<string, string> = {
