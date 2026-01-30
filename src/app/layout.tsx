@@ -36,7 +36,7 @@ export default function RootLayout({
               </a>
               <div className="flex items-center gap-3">
                 <span className="badge badge-yellow animate-pulse-glow text-xs sm:text-sm">
-                  New Round Every Min!
+                  Unlimited Play!
                 </span>
               </div>
             </div>

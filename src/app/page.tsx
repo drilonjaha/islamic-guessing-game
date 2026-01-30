@@ -35,7 +35,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FFE135] text-black font-bold text-sm mb-8 animate-pulse-glow uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-black animate-pulse"></span>
-            New Round Every Minute!
+            Play Unlimited Rounds!
           </div>
 
           <h1 className="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tight mb-8 animate-slide-up text-chunky">

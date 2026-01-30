@@ -4,7 +4,6 @@ import { Modal } from '@/components/ui/Modal';
 import { GuessResult, Category, GameMode, IslamicFigure } from '@/types';
 import { generateShareText, shareResults } from '@/lib/share';
 import { useState } from 'react';
-import { Countdown } from './Countdown';
 
 interface GameOverModalProps {
   isOpen: boolean;
@@ -14,6 +13,7 @@ interface GameOverModalProps {
   category: Category;
   mode: GameMode;
   answer: IslamicFigure;
+  onPlayAgain: () => void;
 }
 
 export function GameOverModal({
@@ -24,6 +24,7 @@ export function GameOverModal({
   category,
   mode,
   answer,
+  onPlayAgain,
 }: GameOverModalProps) {
   const [copied, setCopied] = useState(false);
 
@@ -34,6 +35,11 @@ export function GameOverModal({
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const handlePlayAgain = () => {
+    onClose();
+    onPlayAgain();
   };
 
   return (
@@ -72,30 +78,37 @@ export function GameOverModal({
           <p className="text-zinc-500 text-sm font-arabic mt-1">{answer.nameArabic}</p>
         </div>
 
-        <button
-          onClick={handleShare}
-          className="btn-lunchly w-full py-4 flex items-center justify-center gap-3"
-        >
-          {copied ? (
-            <>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              Copied!
-            </>
-          ) : (
-            <>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-              </svg>
-              Share Results
-            </>
-          )}
-        </button>
+        <div className="space-y-3">
+          <button
+            onClick={handlePlayAgain}
+            className="btn-lunchly w-full py-4 flex items-center justify-center gap-3"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Play Again
+          </button>
 
-        <div className="pt-6 border-t-2 border-white/10">
-          <p className="text-sm text-zinc-500 mb-4 font-bold uppercase tracking-wide">Next round in:</p>
-          <Countdown />
+          <button
+            onClick={handleShare}
+            className="w-full py-4 rounded-full bg-white/10 hover:bg-white/15 text-white font-bold uppercase tracking-wide transition-colors flex items-center justify-center gap-3"
+          >
+            {copied ? (
+              <>
+                <svg className="w-5 h-5 text-[#FFE135]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                Copied!
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share Results
+              </>
+            )}
+          </button>
         </div>
       </div>
     </Modal>

@@ -64,7 +64,7 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
         </div>
 
         <p className="text-xs text-zinc-500 pt-4 border-t-2 border-white/10 font-bold uppercase tracking-wide">
-          A new challenge is available every minute!
+          Play as many rounds as you want!
         </p>
       </div>
     </Modal>

@@ -27,6 +27,7 @@ export function GameBoard() {
     setMode,
     submitGuess,
     initializeGame,
+    playAgain,
   } = useGameStore();
 
   const { recordGame } = useStatsStore();
@@ -237,6 +238,7 @@ export function GameBoard() {
           category={category}
           mode={mode}
           answer={answer}
+          onPlayAgain={playAgain}
         />
       )}
     </div>

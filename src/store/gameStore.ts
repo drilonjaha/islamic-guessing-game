@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Category, GameMode, GameStatus, GuessResult, IslamicFigure, Quote } from '@/types';
-import { getDailyFigure, getDailyQuote, getCurrentRoundKey } from '@/lib/daily-seed';
+import { getRandomFigure, getRandomQuote } from '@/lib/daily-seed';
 import { makeGuess, MAX_ATTEMPTS } from '@/lib/comparisons';
 
 interface GameState {
@@ -14,17 +14,13 @@ interface GameState {
   quoteAnswer: { quote: Quote; figure: IslamicFigure } | null;
   hintsRevealed: number;
 
-  // Round tracking
-  roundKey: string;
-  roundCompleted: Record<string, boolean>; // "category-mode-roundKey" -> completed
-  lockedAnswerId: string | null; // Lock the answer during an active game
-
   // Actions
   setCategory: (category: Category) => void;
   setMode: (mode: GameMode) => void;
   submitGuess: (figure: IslamicFigure) => void;
   initializeGame: () => void;
   resetGame: () => void;
+  playAgain: () => void;
 }
 
 export const useGameStore = create<GameState>()(
@@ -37,9 +33,6 @@ export const useGameStore = create<GameState>()(
       answer: null,
       quoteAnswer: null,
       hintsRevealed: 0,
-      roundKey: '',
-      roundCompleted: {},
-      lockedAnswerId: null,
 
       setCategory: (category) => {
         set({ category });
@@ -52,54 +45,36 @@ export const useGameStore = create<GameState>()(
       },
 
       initializeGame: () => {
-        const { category, mode, roundKey, roundCompleted, gameStatus, guesses, lockedAnswerId } = get();
-        const currentRound = getCurrentRoundKey();
-        const gameKey = `${category}-${mode}-${currentRound}`;
+        const { category, mode, answer } = get();
 
-        // If game is in progress (has guesses but not completed), keep the locked answer
-        const isGameInProgress = gameStatus === 'playing' && guesses.length > 0;
-
-        // Check if already completed this round
-        if (roundKey === currentRound && roundCompleted[gameKey]) {
-          // Don't reset if already completed
+        // If there's already an answer and game is in progress, don't reset
+        if (answer && get().gameStatus === 'playing' && get().guesses.length > 0) {
           return;
-        }
-
-        // If game is in progress, don't change the answer
-        if (isGameInProgress && lockedAnswerId) {
-          return;
-        }
-
-        // New round or new game mode/category - clear completed status for new round
-        if (roundKey !== currentRound) {
-          set({ roundKey: currentRound, roundCompleted: {} });
         }
 
         if (mode === 'classic') {
-          const answer = getDailyFigure(category);
+          const newAnswer = getRandomFigure(category);
           set({
-            answer,
+            answer: newAnswer,
             quoteAnswer: null,
             guesses: [],
             gameStatus: 'playing',
             hintsRevealed: 0,
-            lockedAnswerId: answer.id,
           });
         } else {
-          const quoteAnswer = getDailyQuote(category);
+          const quoteAnswer = getRandomQuote(category);
           set({
             answer: quoteAnswer.figure,
             quoteAnswer,
             guesses: [],
             gameStatus: 'playing',
             hintsRevealed: 0,
-            lockedAnswerId: quoteAnswer.figure.id,
           });
         }
       },
 
       submitGuess: (figure) => {
-        const { answer, guesses, gameStatus, category, mode, roundCompleted, roundKey } = get();
+        const { answer, guesses, gameStatus } = get();
         if (!answer || gameStatus !== 'playing') return;
 
         const result = makeGuess(figure, answer);
@@ -122,13 +97,6 @@ export const useGameStore = create<GameState>()(
           updates.hintsRevealed = Math.min(get().hintsRevealed + 1, 3);
         }
 
-        // Mark as completed if game ended
-        if (newStatus !== 'playing') {
-          const gameKey = `${category}-${mode}-${roundKey}`;
-          updates.roundCompleted = { ...roundCompleted, [gameKey]: true };
-          updates.lockedAnswerId = null; // Clear lock when game ends
-        }
-
         set(updates);
       },
 
@@ -137,9 +105,34 @@ export const useGameStore = create<GameState>()(
           guesses: [],
           gameStatus: 'playing',
           hintsRevealed: 0,
-          lockedAnswerId: null,
+          answer: null,
         });
         get().initializeGame();
+      },
+
+      playAgain: () => {
+        const { category, mode } = get();
+
+        // Force new game with new random figure
+        if (mode === 'classic') {
+          const newAnswer = getRandomFigure(category);
+          set({
+            answer: newAnswer,
+            quoteAnswer: null,
+            guesses: [],
+            gameStatus: 'playing',
+            hintsRevealed: 0,
+          });
+        } else {
+          const quoteAnswer = getRandomQuote(category);
+          set({
+            answer: quoteAnswer.figure,
+            quoteAnswer,
+            guesses: [],
+            gameStatus: 'playing',
+            hintsRevealed: 0,
+          });
+        }
       },
     }),
     {
@@ -147,12 +140,6 @@ export const useGameStore = create<GameState>()(
       partialize: (state) => ({
         category: state.category,
         mode: state.mode,
-        roundKey: state.roundKey,
-        roundCompleted: state.roundCompleted,
-        guesses: state.guesses,
-        gameStatus: state.gameStatus,
-        hintsRevealed: state.hintsRevealed,
-        lockedAnswerId: state.lockedAnswerId,
       }),
     }
   )
