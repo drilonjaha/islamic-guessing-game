@@ -10,12 +10,15 @@ export const tabieen: Tabieen[] = [
     location: 'Madinah',
     gender: 'male',
     generation: 'senior',
-    teachers: ['Abu Hurairah', 'Aisha', 'Uthman ibn Affan', 'Ali ibn Abi Talib'],
+    teachers: ['Abu Hurairah', 'Aisha', 'Uthman ibn Affan'],
     school: 'Madinah',
     specialty: ['fiqh', 'hadith'],
     deathYear: 94,
+    birthCity: 'Madinah',
+    role: 'scholar',
+    famousStudents: ['Al-Zuhri', 'Qatadah'],
     quotes: [
-      { id: 'said-1', text: 'I have not prayed a prayer and looked at anything other than my place of prostration since I reached puberty.', source: 'Siyar Alam an-Nubala' },
+      { id: 'said-1', text: 'I have not prayed a prayer and looked at anything other than my place of prostration.', source: 'Siyar Alam an-Nubala' },
     ],
   },
   {
@@ -31,9 +34,11 @@ export const tabieen: Tabieen[] = [
     school: 'Basra',
     specialty: ['zuhd', 'tafsir', 'hadith'],
     deathYear: 110,
+    birthCity: 'Madinah',
+    role: 'ascetic',
+    famousStudents: ['Ayyub as-Sakhtiyani', 'Yunus ibn Ubayd'],
     quotes: [
-      { id: 'hasan-1', text: 'O son of Adam, you are nothing but a number of days. Whenever a day passes, a part of you has gone.', source: 'Attributed' },
-      { id: 'hasan-2', text: 'The world is a bridge, so cross it and do not build upon it.', source: 'Attributed' },
+      { id: 'hasan-1', text: 'O son of Adam, you are nothing but a number of days.', source: 'Attributed' },
     ],
   },
   {
@@ -49,8 +54,11 @@ export const tabieen: Tabieen[] = [
     school: 'Kufa',
     specialty: ['zuhd'],
     deathYear: 37,
+    birthCity: 'Yemen',
+    role: 'ascetic',
+    famousStudents: [],
     quotes: [
-      { id: 'uwais-1', text: 'The Prophet said: A man from my ummah will intercede for more people than the tribes of Rabiah and Mudar, and he is Uwais al-Qarni.', source: 'Sahih Muslim (about Uwais)' },
+      { id: 'uwais-1', text: 'A man from my ummah will intercede for more people than Rabiah and Mudar.', source: 'Sahih Muslim' },
     ],
   },
   {
@@ -66,8 +74,11 @@ export const tabieen: Tabieen[] = [
     school: 'Makkah',
     specialty: ['fiqh', 'hadith'],
     deathYear: 114,
+    birthCity: 'Makkah',
+    role: 'mufti',
+    famousStudents: ['Ibn Jurayj', 'Al-Awzai'],
     quotes: [
-      { id: 'ata-1', text: 'Knowledge is not acquired except through humility and attentive listening.', source: 'Attributed' },
+      { id: 'ata-1', text: 'Knowledge is not acquired except through humility.', source: 'Attributed' },
     ],
   },
   {
@@ -83,8 +94,11 @@ export const tabieen: Tabieen[] = [
     school: 'Makkah',
     specialty: ['tafsir', 'qiraat'],
     deathYear: 104,
+    birthCity: 'Makkah',
+    role: 'scholar',
+    famousStudents: ['Ibn Kathir al-Makki', 'Aata'],
     quotes: [
-      { id: 'mujahid-1', text: 'I presented the Quran to Ibn Abbas three times, stopping at every verse and asking him about it.', source: 'Historical accounts' },
+      { id: 'mujahid-1', text: 'I presented the Quran to Ibn Abbas three times.', source: 'Historical accounts' },
     ],
   },
   {
@@ -100,8 +114,11 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['tafsir', 'hadith'],
     deathYear: 105,
+    birthCity: 'Berber',
+    role: 'scholar',
+    famousStudents: ['Ayyub as-Sakhtiyani', 'Yahya ibn Abi Kathir'],
     quotes: [
-      { id: 'ikrimah-1', text: 'I would stand at the door of a Companion until I learned from him what I needed.', source: 'Attributed' },
+      { id: 'ikrimah-1', text: 'I would stand at the door of a Companion until I learned.', source: 'Attributed' },
     ],
   },
   {
@@ -117,6 +134,9 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['hadith', 'fiqh'],
     deathYear: 117,
+    birthCity: 'Unknown',
+    role: 'teacher',
+    famousStudents: ['Imam Malik', 'Al-Layth ibn Sad'],
     quotes: [
       { id: 'nafi-1', text: 'I served Ibn Umar for thirty years.', source: 'Historical accounts' },
     ],
@@ -134,8 +154,11 @@ export const tabieen: Tabieen[] = [
     school: 'Basra',
     specialty: ['hadith', 'fiqh'],
     deathYear: 110,
+    birthCity: 'Basra',
+    role: 'judge',
+    famousStudents: ['Ayyub as-Sakhtiyani', 'Ibn Awn'],
     quotes: [
-      { id: 'ibnsirin-1', text: 'Indeed this knowledge is the religion, so look from whom you take your religion.', source: 'Sahih Muslim (Introduction)' },
+      { id: 'ibnsirin-1', text: 'This knowledge is the religion, so look from whom you take your religion.', source: 'Sahih Muslim' },
     ],
   },
   {
@@ -151,6 +174,9 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['hadith', 'fiqh'],
     deathYear: 94,
+    birthCity: 'Madinah',
+    role: 'scholar',
+    famousStudents: ['Al-Zuhri', 'Hisham ibn Urwah'],
     quotes: [
       { id: 'urwah-1', text: 'I learned most of what I know from Aisha.', source: 'Historical accounts' },
     ],
@@ -168,8 +194,11 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['fiqh', 'hadith'],
     deathYear: 106,
+    birthCity: 'Madinah',
+    role: 'scholar',
+    famousStudents: ['Imam Malik', 'Nafi'],
     quotes: [
-      { id: 'qasim-1', text: 'Among those who came after the Companions, there was no one in Madinah whom I preferred to al-Qasim.', source: 'Imam Malik' },
+      { id: 'qasim-1', text: 'Among those who came after the Companions, there was none I preferred to al-Qasim.', source: 'Imam Malik' },
     ],
   },
   {
@@ -185,8 +214,11 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['hadith', 'fiqh'],
     deathYear: 124,
+    birthCity: 'Madinah',
+    role: 'scholar',
+    famousStudents: ['Imam Malik', 'Sufyan ibn Uyaynah'],
     quotes: [
-      { id: 'zuhri-1', text: 'Whoever seeks knowledge all at once, loses it all at once. Knowledge is sought over days and nights.', source: 'Attributed' },
+      { id: 'zuhri-1', text: 'Whoever seeks knowledge all at once, loses it all at once.', source: 'Attributed' },
     ],
   },
   {
@@ -202,6 +234,9 @@ export const tabieen: Tabieen[] = [
     school: 'Kufa',
     specialty: ['fiqh', 'hadith'],
     deathYear: 96,
+    birthCity: 'Kufa',
+    role: 'mufti',
+    famousStudents: ['Hammad ibn Abi Sulayman', 'Al-Amash'],
     quotes: [
       { id: 'ibrahim-1', text: 'I would hear a hadith from one man and ask about it from ten others.', source: 'Attributed' },
     ],
@@ -219,6 +254,9 @@ export const tabieen: Tabieen[] = [
     school: 'Kufa',
     specialty: ['hadith', 'fiqh'],
     deathYear: 104,
+    birthCity: 'Kufa',
+    role: 'judge',
+    famousStudents: ['Abu Hanifa', 'Ibn Shubramah'],
     quotes: [
       { id: 'shabi-1', text: 'Saying "I do not know" is half of knowledge.', source: 'Attributed' },
     ],
@@ -236,6 +274,9 @@ export const tabieen: Tabieen[] = [
     school: 'Yemen',
     specialty: ['fiqh', 'hadith', 'zuhd'],
     deathYear: 106,
+    birthCity: 'Yemen',
+    role: 'scholar',
+    famousStudents: ['Ibn Jurayj', 'Amr ibn Dinar'],
     quotes: [
       { id: 'tawus-1', text: 'A scholar should keep his knowledge fresh by acting upon it.', source: 'Attributed' },
     ],
@@ -253,6 +294,9 @@ export const tabieen: Tabieen[] = [
     school: 'Madinah',
     specialty: ['fiqh'],
     deathYear: 136,
+    birthCity: 'Madinah',
+    role: 'teacher',
+    famousStudents: ['Imam Malik', 'Al-Awzai'],
     quotes: [
       { id: 'rabiah-1', text: 'The teacher of Imam Malik in fiqh and reasoning.', source: 'Historical accounts' },
     ],

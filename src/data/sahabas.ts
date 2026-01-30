@@ -15,9 +15,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 142,
     caliphOrder: 1,
+    relationToProphet: 'father-in-law',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
       { id: 'abubakr-1', text: 'Whoever worshipped Muhammad, then Muhammad has died. But whoever worshipped Allah, then Allah is Ever-Living and shall never die.', source: 'Sahih Bukhari' },
-      { id: 'abubakr-2', text: 'Do not be people without minds of your own, saying that if others treat you well you will treat them well.', source: 'Attributed' },
     ],
   },
   {
@@ -34,9 +36,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 539,
     caliphOrder: 2,
+    relationToProphet: 'father-in-law',
+    martyred: true,
+    migratedToAbyssinia: false,
     quotes: [
       { id: 'umar-1', text: 'Take account of yourselves before you are taken to account.', source: 'Attributed' },
-      { id: 'umar-2', text: 'May Allah have mercy on a man who shows me my faults.', source: 'Attributed' },
     ],
   },
   {
@@ -53,6 +57,9 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 146,
     caliphOrder: 3,
+    relationToProphet: 'son-in-law',
+    martyred: true,
+    migratedToAbyssinia: true,
     quotes: [
       { id: 'uthman-1', text: 'If our hearts were truly pure, we would never tire of the words of Allah.', source: 'Attributed' },
     ],
@@ -71,9 +78,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 586,
     caliphOrder: 4,
+    relationToProphet: 'son-in-law',
+    martyred: true,
+    migratedToAbyssinia: false,
     quotes: [
       { id: 'ali-1', text: 'Do not let your difficulties fill you with anxiety; after all, it is only in the darkest nights that stars shine more brightly.', source: 'Nahj al-Balagha' },
-      { id: 'ali-2', text: 'Patience is of two kinds: patience over what pains you, and patience against what you covet.', source: 'Nahj al-Balagha' },
     ],
   },
   {
@@ -90,8 +99,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 0,
     caliphOrder: null,
+    relationToProphet: 'wife',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'khadijah-1', text: 'Never! By Allah, Allah will never disgrace you. You keep good relations with your kith and kin, help the poor, serve your guests generously, and assist those afflicted by calamity.', source: 'Sahih Bukhari' },
+      { id: 'khadijah-1', text: 'Never! By Allah, Allah will never disgrace you.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -108,9 +120,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 2210,
     caliphOrder: null,
+    relationToProphet: 'wife',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
       { id: 'aisha-1', text: 'The character of the Prophet was the Quran.', source: 'Sahih Muslim' },
-      { id: 'aisha-2', text: 'I have not seen anyone more merciful to the family members than the Messenger of Allah.', source: 'Sahih Muslim' },
     ],
   },
   {
@@ -127,8 +141,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 18,
     caliphOrder: null,
+    relationToProphet: 'daughter',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'fatimah-1', text: 'The Prophet said: Fatimah is a part of me, and whoever angers her angers me.', source: 'Sahih Bukhari' },
+      { id: 'fatimah-1', text: 'The Prophet said: Fatimah is a part of me.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -145,6 +162,9 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 5374,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
       { id: 'abuhurairah-1', text: 'I devoted myself to accompanying the Prophet to fill my stomach.', source: 'Sahih Bukhari' },
     ],
@@ -163,6 +183,9 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 44,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: true,
     quotes: [
       { id: 'bilal-1', text: 'Ahad, Ahad (One, One) - referring to Allah while being tortured.', source: 'Historical accounts' },
     ],
@@ -181,8 +204,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 60,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'salman-1', text: 'The Prophet said: Salman is one of us, the People of the House (Ahl al-Bayt).', source: 'Various sources' },
+      { id: 'salman-1', text: 'The Prophet said: Salman is one of us, the People of the House.', source: 'Various sources' },
     ],
   },
   {
@@ -199,8 +225,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 281,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'abudharr-1', text: 'The earth has not borne and the heaven has not covered a man more truthful than Abu Dharr.', source: 'Sunan at-Tirmidhi (about Abu Dharr)' },
+      { id: 'abudharr-1', text: 'The earth has not borne a man more truthful than Abu Dharr.', source: 'Sunan at-Tirmidhi' },
     ],
   },
   {
@@ -217,8 +246,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 157,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'muadh-1', text: 'The Prophet said: The most knowledgeable of my ummah in halal and haram is Muadh ibn Jabal.', source: 'Various sources' },
+      { id: 'muadh-1', text: 'The most knowledgeable of my ummah in halal and haram is Muadh.', source: 'Various sources' },
     ],
   },
   {
@@ -235,8 +267,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 18,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'khalid-1', text: 'The Prophet said: Khalid is a sword from among the swords of Allah.', source: 'Sunan at-Tirmidhi' },
+      { id: 'khalid-1', text: 'Khalid is a sword from among the swords of Allah.', source: 'Sunan at-Tirmidhi' },
     ],
   },
   {
@@ -253,8 +288,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 271,
     caliphOrder: null,
+    relationToProphet: 'uncle',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'saad-1', text: 'The Prophet said: Shoot, Saad! May my father and mother be sacrificed for you.', source: 'Sahih Bukhari' },
+      { id: 'saad-1', text: 'Shoot, Saad! May my father and mother be sacrificed for you.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -271,8 +309,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 38,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: true,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'talha-1', text: 'The Prophet said: Whoever wants to see a walking martyr, let him look at Talha.', source: 'Sunan at-Tirmidhi' },
+      { id: 'talha-1', text: 'Whoever wants to see a walking martyr, let him look at Talha.', source: 'Sunan at-Tirmidhi' },
     ],
   },
   {
@@ -289,8 +330,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 38,
     caliphOrder: null,
+    relationToProphet: 'cousin',
+    martyred: true,
+    migratedToAbyssinia: true,
     quotes: [
-      { id: 'zubayr-1', text: 'The Prophet said: Every Prophet has a disciple, and my disciple is Zubayr.', source: 'Sahih Bukhari' },
+      { id: 'zubayr-1', text: 'Every Prophet has a disciple, and my disciple is Zubayr.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -307,8 +351,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 65,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: true,
     quotes: [
-      { id: 'abdurrahman-1', text: 'Show me to the market.', source: 'Sahih Bukhari (upon arriving in Madinah)' },
+      { id: 'abdurrahman-1', text: 'Show me to the market.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -325,8 +372,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 14,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: true,
     quotes: [
-      { id: 'abuubaidah-1', text: 'The Prophet said: Every nation has a trustee, and the trustee of this nation is Abu Ubaidah.', source: 'Sahih Bukhari' },
+      { id: 'abuubaidah-1', text: 'The trustee of this nation is Abu Ubaidah.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -343,8 +393,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: false,
     hadithNarrated: 2286,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: false,
     quotes: [
-      { id: 'anas-1', text: 'I served the Prophet for ten years, and he never said to me "Uff" nor "Why did you do that?" nor "Why did you not do that?"', source: 'Sahih Bukhari' },
+      { id: 'anas-1', text: 'I served the Prophet for ten years, and he never said Uff to me.', source: 'Sahih Bukhari' },
     ],
   },
   {
@@ -361,8 +414,11 @@ export const sahabas: Sahaba[] = [
     participatedBadr: true,
     hadithNarrated: 848,
     caliphOrder: null,
+    relationToProphet: 'none',
+    martyred: false,
+    migratedToAbyssinia: true,
     quotes: [
-      { id: 'ibnmasud-1', text: 'The Prophet said: Take the Quran from four: Ibn Masud, Salim, Muadh, and Ubay ibn Kaab.', source: 'Sahih Bukhari' },
+      { id: 'ibnmasud-1', text: 'Take the Quran from four: Ibn Masud, Salim, Muadh, and Ubay.', source: 'Sahih Bukhari' },
     ],
   },
 ];

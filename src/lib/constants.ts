@@ -68,6 +68,9 @@ export const SAHABA_ATTRIBUTES = [
   'Ashara',
   'Badr',
   'Hadith',
+  'Relation',
+  'Martyred',
+  'Abyssinia',
 ];
 
 export const TABIEEN_ATTRIBUTES = [
@@ -76,6 +79,9 @@ export const TABIEEN_ATTRIBUTES = [
   'Teachers',
   'Specialty',
   'Death Year',
+  'Birth City',
+  'Role',
+  'Students',
 ];
 
 export function getAttributesForCategory(category: Category): string[] {

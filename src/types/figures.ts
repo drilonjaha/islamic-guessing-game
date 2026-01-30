@@ -34,6 +34,8 @@ export interface Prophet extends BaseFigure {
 
 export type ConversionPeriod = 'early-makkah' | 'late-makkah' | 'early-madinah' | 'late-madinah' | 'fath-makkah';
 
+export type SahabaRelation = 'wife' | 'daughter' | 'son-in-law' | 'father-in-law' | 'cousin' | 'uncle' | 'none';
+
 export interface Sahaba extends BaseFigure {
   category: 'sahaba';
   conversionPeriod: ConversionPeriod;
@@ -42,10 +44,16 @@ export interface Sahaba extends BaseFigure {
   participatedBadr: boolean;
   hadithNarrated: number;
   caliphOrder: number | null;
+  // New attributes
+  relationToProphet: SahabaRelation;
+  martyred: boolean;
+  migratedToAbyssinia: boolean;
 }
 
 export type TabieenGeneration = 'senior' | 'middle' | 'junior';
 export type TabieenSpecialty = 'fiqh' | 'hadith' | 'tafsir' | 'qiraat' | 'zuhd';
+
+export type TabieenRole = 'judge' | 'mufti' | 'teacher' | 'scholar' | 'ascetic';
 
 export interface Tabieen extends BaseFigure {
   category: 'tabieen';
@@ -54,6 +62,10 @@ export interface Tabieen extends BaseFigure {
   school: string;
   specialty: TabieenSpecialty[];
   deathYear: number;
+  // New attributes
+  birthCity: string;
+  role: TabieenRole;
+  famousStudents: string[];
 }
 
 export type IslamicFigure = Prophet | Sahaba | Tabieen;

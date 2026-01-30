@@ -232,6 +232,28 @@ function compareSahabaAttributes(
     hint: hadithResult.hint,
   });
 
+  // New attributes
+  results.push({
+    attribute: 'Relation',
+    value: answer.relationToProphet,
+    guessValue: guess.relationToProphet,
+    result: compareString(guess.relationToProphet, answer.relationToProphet),
+  });
+
+  results.push({
+    attribute: 'Martyred',
+    value: answer.martyred,
+    guessValue: guess.martyred,
+    result: compareBoolean(guess.martyred, answer.martyred),
+  });
+
+  results.push({
+    attribute: 'Abyssinia',
+    value: answer.migratedToAbyssinia,
+    guessValue: guess.migratedToAbyssinia,
+    result: compareBoolean(guess.migratedToAbyssinia, answer.migratedToAbyssinia),
+  });
+
   return results;
 }
 
@@ -308,6 +330,39 @@ function compareTabieenAttributes(
     guessValue: guess.deathYear,
     result: deathResult.result,
     hint: deathResult.hint,
+  });
+
+  // New attributes
+  results.push({
+    attribute: 'Birth City',
+    value: answer.birthCity,
+    guessValue: guess.birthCity,
+    result: compareString(guess.birthCity, answer.birthCity),
+  });
+
+  results.push({
+    attribute: 'Role',
+    value: answer.role,
+    guessValue: guess.role,
+    result: compareString(guess.role, answer.role),
+  });
+
+  // Check if any famous students match
+  const commonStudents = guess.famousStudents.filter((s) =>
+    answer.famousStudents.includes(s)
+  );
+  let studentsResult: MatchResult = 'wrong';
+  if (guess.famousStudents.length === answer.famousStudents.length &&
+      commonStudents.length === answer.famousStudents.length) {
+    studentsResult = 'exact';
+  } else if (commonStudents.length > 0) {
+    studentsResult = 'partial';
+  }
+  results.push({
+    attribute: 'Students',
+    value: answer.famousStudents.slice(0, 2).join(', ') || 'None',
+    guessValue: guess.famousStudents.slice(0, 2).join(', ') || 'None',
+    result: studentsResult,
   });
 
   return results;
