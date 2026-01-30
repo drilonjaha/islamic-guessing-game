@@ -116,21 +116,24 @@ export function GuessInput({ category, onGuess, disabled, guessedIds }: GuessInp
 
       {showSuggestions && suggestions.length > 0 && (
         <div className="absolute top-full left-0 right-0 mt-3 z-50">
-          <div className="card-bold rounded-2xl shadow-2xl overflow-hidden border-2 border-white/10">
+          <div className="bg-[#0D0D0D] rounded-2xl shadow-2xl overflow-hidden border-2 border-[#FFE135]/30">
             {suggestions.map((figure, index) => (
               <button
                 key={figure.id}
                 onClick={() => handleSelect(figure)}
                 className={cn(
                   'w-full px-5 py-4 text-left flex items-center justify-between gap-3',
-                  'transition-colors font-medium',
+                  'transition-colors',
                   index === selectedIndex
-                    ? 'bg-[#FFE135]/20 text-white'
-                    : 'text-zinc-300 hover:bg-white/5'
+                    ? 'bg-[#FFE135] text-black'
+                    : 'text-white hover:bg-white/10'
                 )}
               >
                 <span className="font-bold truncate">{figure.name}</span>
-                <span className="text-sm text-zinc-500 shrink-0 font-arabic">{figure.nameArabic}</span>
+                <span className={cn(
+                  "text-sm shrink-0 font-arabic",
+                  index === selectedIndex ? 'text-black/70' : 'text-zinc-400'
+                )}>{figure.nameArabic}</span>
               </button>
             ))}
           </div>
