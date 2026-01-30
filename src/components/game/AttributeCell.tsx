@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { AttributeResult } from '@/types';
+import { AttributeResult, MatchResult } from '@/types';
 import { MATCH_COLORS } from '@/lib/comparisons';
 
 interface AttributeCellProps {
@@ -10,80 +10,83 @@ interface AttributeCellProps {
   delay?: number;
 }
 
-function getTooltipText(result: AttributeResult): string {
-  const { attribute, result: matchResult, hint, guessValue, value } = result;
+const TOOLTIP_COLORS: Record<MatchResult, { bg: string; border: string; accent: string }> = {
+  exact: { bg: 'bg-emerald-950', border: 'border-emerald-500', accent: 'text-emerald-400' },
+  partial: { bg: 'bg-amber-950', border: 'border-amber-500', accent: 'text-amber-400' },
+  wrong: { bg: 'bg-red-950', border: 'border-red-500', accent: 'text-red-400' },
+};
 
-  // Format display values
+const TOOLTIP_ARROWS: Record<MatchResult, string> = {
+  exact: 'border-t-emerald-950',
+  partial: 'border-t-amber-950',
+  wrong: 'border-t-red-950',
+};
+
+function getTooltipContent(result: AttributeResult): { title: string; description: string } {
+  const { attribute, result: matchResult, hint, guessValue } = result;
+
   const formatValue = (v: unknown) => {
     if (typeof v === 'boolean') return v ? 'Yes' : 'No';
     return String(v);
   };
 
   const guessDisplay = formatValue(guessValue);
-  const answerDisplay = formatValue(value);
 
-  // Build explanation based on match result
-  let colorExplanation = '';
+  let title = '';
+  let description = '';
+
   if (matchResult === 'exact') {
-    colorExplanation = `Correct! ${attribute} matches exactly.`;
+    title = 'Exact Match!';
+    description = `${attribute} is correct.`;
   } else if (matchResult === 'partial') {
-    // Specific explanations for partial matches
+    title = 'Close!';
     switch (attribute) {
       case 'Era':
-        colorExplanation = `Close! "${guessDisplay}" is within 1000 years of the answer.`;
+        description = `"${guessDisplay}" is within 1000 years of the answer.`;
         break;
       case 'Region':
-        colorExplanation = `Close! "${guessDisplay}" is in the same general region.`;
+        description = `"${guessDisplay}" is in the same general region.`;
         break;
       case 'Mentions':
-        colorExplanation = `Close! ${guessDisplay} mentions is in a nearby range.`;
+        description = `${guessDisplay} mentions is in a nearby range.`;
         break;
       case 'Conversion':
-        colorExplanation = `Close! "${guessDisplay}" is an adjacent conversion period.`;
+        description = `"${guessDisplay}" is an adjacent conversion period.`;
         break;
       case 'Generation':
-        colorExplanation = `Close! "${guessDisplay}" is an adjacent generation.`;
+        description = `"${guessDisplay}" is an adjacent generation.`;
         break;
       case 'Teachers':
-        colorExplanation = `Partial match! Some teachers overlap.`;
+        description = `Some teachers overlap with the answer.`;
         break;
       case 'Specialty':
-        colorExplanation = `Partial match! Some specialties overlap.`;
+        description = `Some specialties overlap with the answer.`;
         break;
       case 'Students':
-        colorExplanation = `Partial match! Some students overlap.`;
+        description = `Some students overlap with the answer.`;
         break;
       case 'Death Year':
+        description = `${guessDisplay} AH is within 20% of the answer.`;
+        break;
       case 'Hadith':
-        colorExplanation = `Close! ${guessDisplay} is within 20% of the answer.`;
+        description = `${guessDisplay} hadiths is within 20% of the answer.`;
         break;
       default:
-        colorExplanation = `Close! "${guessDisplay}" is similar to the answer.`;
+        description = `"${guessDisplay}" is similar to the answer.`;
     }
   } else {
-    colorExplanation = `Wrong. The answer's ${attribute.toLowerCase()} is different from "${guessDisplay}".`;
+    title = 'Wrong';
+    description = `The answer's ${attribute.toLowerCase()} is not "${guessDisplay}".`;
   }
 
-  // Add hint explanation for arrows
-  let hintExplanation = '';
+  // Add hint explanation
   if (hint) {
+    const arrow = hint === 'higher' ? '↑' : '↓';
     const direction = hint === 'higher' ? 'higher' : 'lower';
-    switch (attribute) {
-      case 'Mentions':
-        hintExplanation = ` The correct number of Quran mentions is ${direction} than ${guessDisplay}.`;
-        break;
-      case 'Hadith':
-        hintExplanation = ` The correct hadith count is ${direction} than ${guessDisplay}.`;
-        break;
-      case 'Death Year':
-        hintExplanation = ` The correct death year is ${direction} than ${guessDisplay} AH.`;
-        break;
-      default:
-        hintExplanation = ` The correct value is ${direction}.`;
-    }
+    description += ` ${arrow} The answer is ${direction}.`;
   }
 
-  return colorExplanation + hintExplanation;
+  return { title, description };
 }
 
 export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
@@ -96,7 +99,9 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
         : 'No'
       : result.guessValue;
 
-  const tooltipText = getTooltipText(result);
+  const { title, description } = getTooltipContent(result);
+  const tooltipStyle = TOOLTIP_COLORS[result.result];
+  const arrowColor = TOOLTIP_ARROWS[result.result];
 
   return (
     <div
@@ -132,19 +137,36 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
       {showTooltip && (
         <div
           className={cn(
-            'absolute z-50 px-3 py-2 text-xs font-medium text-white',
-            'bg-black/95 rounded-lg shadow-lg border border-white/20',
-            'w-48 sm:w-56',
-            'bottom-full left-1/2 mb-2',
+            'absolute z-50',
+            'w-52 sm:w-64',
+            'bottom-full left-1/2 mb-3',
             'animate-tooltip'
           )}
         >
-          <div className="text-left leading-relaxed">
-            {tooltipText}
+          <div
+            className={cn(
+              'rounded-2xl overflow-hidden',
+              'border-2',
+              'shadow-xl',
+              tooltipStyle.bg,
+              tooltipStyle.border
+            )}
+          >
+            {/* Header */}
+            <div className={cn(
+              'px-4 py-2 font-black text-sm uppercase tracking-wide',
+              tooltipStyle.accent
+            )}>
+              {title}
+            </div>
+            {/* Body */}
+            <div className="px-4 pb-3 text-white/90 text-xs leading-relaxed">
+              {description}
+            </div>
           </div>
-          {/* Arrow pointing down */}
+          {/* Arrow */}
           <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-            <div className="border-8 border-transparent border-t-black/95"></div>
+            <div className={cn('border-8 border-transparent', arrowColor)}></div>
           </div>
         </div>
       )}
