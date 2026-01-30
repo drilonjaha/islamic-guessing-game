@@ -17,11 +17,11 @@ export function Countdown() {
   }, []);
 
   return (
-    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10">
-      <div className="text-2xl font-bold text-emerald-400 font-mono tabular-nums">
+    <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-[#FFE135]/10 border-2 border-[#FFE135]/30">
+      <div className="text-4xl font-black text-[#FFE135] font-mono tabular-nums">
         {seconds}
       </div>
-      <div className="text-xs text-zinc-500 uppercase tracking-wide">sec</div>
+      <div className="text-sm text-zinc-400 uppercase tracking-wide font-bold">seconds</div>
     </div>
   );
 }

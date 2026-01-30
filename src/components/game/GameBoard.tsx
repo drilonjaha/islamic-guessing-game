@@ -70,7 +70,7 @@ export function GameBoard() {
   if (!hasInitialized || !answer) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-zinc-500 animate-pulse">Loading...</div>
+        <div className="text-[#FFE135] font-bold uppercase tracking-wide animate-pulse">Loading...</div>
       </div>
     );
   }
@@ -88,24 +88,26 @@ export function GameBoard() {
 
       {/* Header with Help */}
       <div className="flex items-center justify-between">
-        <div className="text-sm text-zinc-500">
-          Attempt <span className="text-white font-medium">{Math.min(guesses.length + 1, MAX_ATTEMPTS)}</span> of {MAX_ATTEMPTS}
+        <div className="text-sm font-bold uppercase tracking-wide">
+          <span className="text-zinc-500">Attempt</span>{' '}
+          <span className="text-[#FFE135] text-lg">{Math.min(guesses.length + 1, MAX_ATTEMPTS)}</span>
+          <span className="text-zinc-500"> of {MAX_ATTEMPTS}</span>
         </div>
         <div className="flex items-center gap-2">
           <button
             onClick={resetOnboarding}
-            className="text-zinc-500 hover:text-white transition-colors text-xs px-2 py-1 rounded hover:bg-white/5"
+            className="text-zinc-500 hover:text-[#FFE135] transition-colors px-3 py-2 rounded-xl hover:bg-white/5 font-bold"
             title="Show tutorial"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
             </svg>
           </button>
           <button
             onClick={() => setShowHelp(true)}
-            className="text-zinc-400 hover:text-white transition-colors text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg hover:bg-white/5"
+            className="text-zinc-400 hover:text-[#FFE135] transition-colors text-sm flex items-center gap-2 px-4 py-2 rounded-xl hover:bg-white/5 font-bold uppercase"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10" />
               <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
               <line x1="12" y1="17" x2="12.01" y2="17" />
@@ -116,7 +118,7 @@ export function GameBoard() {
       </div>
 
       {/* Mode and Category Selection */}
-      <div className="glass-card rounded-xl p-4 space-y-4">
+      <div className="card-bold rounded-2xl p-4 space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div id="mode-selector">
             <ModeSelector
@@ -125,7 +127,7 @@ export function GameBoard() {
               disabled={guesses.length > 0}
             />
           </div>
-          <div className="hidden sm:block w-px h-8 bg-white/10"></div>
+          <div className="hidden sm:block w-px h-10 bg-white/10"></div>
           <div id="category-selector">
             <CategorySelector
               selected={category}
@@ -158,22 +160,22 @@ export function GameBoard() {
 
       {/* Classic Mode: Attribute Headers and Guesses */}
       {mode === 'classic' && (
-        <div className="glass-card rounded-xl p-4 overflow-hidden">
+        <div className="card-bold rounded-2xl p-4 overflow-hidden">
           {/* Color legend - show only when there are guesses */}
           {guesses.length > 0 && (
-            <div className="flex flex-wrap items-center gap-3 mb-4 pb-4 border-b border-white/5">
-              <span className="text-xs text-zinc-500">Colors:</span>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded bg-emerald-500"></div>
-                <span className="text-xs text-zinc-400">Exact</span>
+            <div className="flex flex-wrap items-center gap-4 mb-4 pb-4 border-b-2 border-white/5">
+              <span className="text-xs text-zinc-500 font-bold uppercase">Legend:</span>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-md bg-emerald-500"></div>
+                <span className="text-xs text-zinc-400 font-bold">Exact</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded bg-amber-500"></div>
-                <span className="text-xs text-zinc-400">Close</span>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-md bg-amber-500"></div>
+                <span className="text-xs text-zinc-400 font-bold">Close</span>
               </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded bg-red-500/70"></div>
-                <span className="text-xs text-zinc-400">Wrong</span>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-md bg-red-500"></div>
+                <span className="text-xs text-zinc-400 font-bold">Wrong</span>
               </div>
             </div>
           )}
@@ -190,14 +192,14 @@ export function GameBoard() {
           </div>
 
           {guesses.length === 0 && (
-            <div className="text-center py-12 text-zinc-500 text-sm">
-              <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="text-center py-12 text-zinc-500">
+              <div className="w-16 h-16 rounded-2xl bg-[#FFE135]/10 flex items-center justify-center mx-auto mb-4 animate-float">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFE135" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="11" cy="11" r="8"/>
                   <path d="m21 21-4.3-4.3"/>
                 </svg>
               </div>
-              <p>Start guessing to see hints</p>
+              <p className="font-bold uppercase tracking-wide">Start guessing to see hints</p>
             </div>
           )}
         </div>
@@ -205,16 +207,16 @@ export function GameBoard() {
 
       {/* Quote Mode: Simple list of guesses */}
       {mode === 'quote' && guesses.length > 0 && (
-        <div className="glass-card rounded-xl p-4">
-          <p className="text-sm text-zinc-400 font-medium mb-3">Your guesses:</p>
+        <div className="card-bold rounded-2xl p-4">
+          <p className="text-sm text-zinc-400 font-bold uppercase tracking-wide mb-3">Your guesses:</p>
           <div className="flex flex-wrap gap-2">
             {guesses.map((result) => (
               <span
                 key={result.figure.id}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium ${
+                className={`px-4 py-2 rounded-xl text-sm font-bold uppercase ${
                   result.isCorrect
                     ? 'bg-emerald-500 text-white'
-                    : 'bg-white/5 text-zinc-300 border border-white/10'
+                    : 'bg-white/5 text-zinc-300 border-2 border-white/10'
                 }`}
               >
                 {result.figure.name}

@@ -12,13 +12,13 @@ export function AttributeHeader({ category }: AttributeHeaderProps) {
 
   return (
     <div className="flex items-center gap-1.5">
-      <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-zinc-500 uppercase tracking-wider font-medium py-2">
+      <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-[#FFE135] uppercase tracking-wider font-bold py-2">
         Name
       </div>
       {attributes.map((attr) => (
         <div
           key={attr}
-          className="shrink-0 w-16 sm:w-20 text-center text-[10px] text-zinc-500 uppercase tracking-wider font-medium py-2"
+          className="shrink-0 w-16 sm:w-20 text-center text-[10px] text-zinc-500 uppercase tracking-wider font-bold py-2"
         >
           {attr}
         </div>

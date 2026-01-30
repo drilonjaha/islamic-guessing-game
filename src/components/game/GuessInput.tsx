@@ -80,14 +80,14 @@ export function GuessInput({ category, onGuess, disabled, guessedIds }: GuessInp
     <div ref={containerRef} className="relative w-full">
       <div className="relative">
         <svg
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500"
+          className="absolute left-5 top-1/2 -translate-y-1/2 text-[#FFE135]"
           xmlns="http://www.w3.org/2000/svg"
-          width="18"
-          height="18"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
@@ -104,10 +104,10 @@ export function GuessInput({ category, onGuess, disabled, guessedIds }: GuessInp
           disabled={disabled}
           placeholder={`Search for a ${categoryLabel}... (${availableFigures.length} remaining)`}
           className={cn(
-            'w-full pl-12 pr-4 py-4 rounded-xl text-base',
-            'bg-white/5 border border-white/10',
+            'w-full pl-14 pr-6 py-5 rounded-2xl text-base font-medium',
+            'bg-white/5 border-3 border-white/10',
             'text-white placeholder-zinc-500',
-            'focus:outline-none focus:border-emerald-500/50 focus:bg-white/[0.07]',
+            'focus:outline-none focus:border-[#FFE135]/50 focus:bg-white/[0.07]',
             'disabled:opacity-50 disabled:cursor-not-allowed',
             'transition-all'
           )}
@@ -115,22 +115,22 @@ export function GuessInput({ category, onGuess, disabled, guessedIds }: GuessInp
       </div>
 
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-2 z-50">
-          <div className="glass-card rounded-xl shadow-2xl overflow-hidden border border-white/10">
+        <div className="absolute top-full left-0 right-0 mt-3 z-50">
+          <div className="card-bold rounded-2xl shadow-2xl overflow-hidden border-2 border-white/10">
             {suggestions.map((figure, index) => (
               <button
                 key={figure.id}
                 onClick={() => handleSelect(figure)}
                 className={cn(
-                  'w-full px-4 py-3 text-left flex items-center justify-between gap-3',
-                  'transition-colors',
+                  'w-full px-5 py-4 text-left flex items-center justify-between gap-3',
+                  'transition-colors font-medium',
                   index === selectedIndex
-                    ? 'bg-emerald-500/20 text-white'
+                    ? 'bg-[#FFE135]/20 text-white'
                     : 'text-zinc-300 hover:bg-white/5'
                 )}
               >
-                <span className="font-medium truncate">{figure.name}</span>
-                <span className="text-sm text-zinc-500 shrink-0">{figure.nameArabic}</span>
+                <span className="font-bold truncate">{figure.name}</span>
+                <span className="text-sm text-zinc-500 shrink-0 font-arabic">{figure.nameArabic}</span>
               </button>
             ))}
           </div>

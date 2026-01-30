@@ -78,7 +78,7 @@ export function OnboardingGuide({ onComplete, currentStep, setCurrentStep }: Onb
   // Calculate tooltip position
   const getTooltipStyle = () => {
     const padding = 12;
-    const tooltipWidth = 280;
+    const tooltipWidth = 300;
 
     switch (step.position) {
       case 'bottom':
@@ -122,23 +122,23 @@ export function OnboardingGuide({ onComplete, currentStep, setCurrentStep }: Onb
   return (
     <div className="fixed inset-0 z-[100] pointer-events-none">
       {/* Subtle overlay */}
-      <div className="absolute inset-0 bg-black/40 pointer-events-auto" onClick={handleSkip} />
+      <div className="absolute inset-0 bg-black/60 pointer-events-auto" onClick={handleSkip} />
 
       {/* Highlight cutout */}
       <div
-        className="absolute bg-transparent rounded-xl pointer-events-none"
+        className="absolute bg-transparent rounded-2xl pointer-events-none"
         style={{
           top: targetRect.top - 4,
           left: targetRect.left - 4,
           width: targetRect.width + 8,
           height: targetRect.height + 8,
-          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.4), 0 0 20px rgba(16, 185, 129, 0.3)',
+          boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 225, 53, 0.4)',
         }}
       />
 
       {/* Pulsing ring around target */}
       <div
-        className="absolute rounded-xl border-2 border-emerald-400 animate-pulse pointer-events-none"
+        className="absolute rounded-2xl border-3 border-[#FFE135] animate-pulse pointer-events-none"
         style={{
           top: targetRect.top - 4,
           left: targetRect.left - 4,
@@ -153,7 +153,7 @@ export function OnboardingGuide({ onComplete, currentStep, setCurrentStep }: Onb
         style={getArrowStyle()}
       >
         <div className={cn(
-          "text-emerald-400",
+          "text-[#FFE135]",
           step.position === 'bottom' ? 'animate-bounce' : 'animate-bounce rotate-180'
         )}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -164,36 +164,36 @@ export function OnboardingGuide({ onComplete, currentStep, setCurrentStep }: Onb
 
       {/* Tooltip */}
       <div
-        className="absolute w-[280px] pointer-events-auto"
+        className="absolute w-[300px] pointer-events-auto"
         style={getTooltipStyle()}
       >
-        <div className="bg-zinc-900 border border-white/10 rounded-xl p-4 shadow-2xl animate-fade-in">
+        <div className="card-bold rounded-2xl p-5 shadow-2xl animate-fade-in border-2 border-[#FFE135]/30">
           {/* Step indicator */}
-          <div className="flex items-center gap-1.5 mb-3">
+          <div className="flex items-center gap-2 mb-4">
             {steps.map((_, i) => (
               <div
                 key={i}
                 className={cn(
-                  'h-1 rounded-full transition-all',
-                  i === currentStep ? 'w-4 bg-emerald-400' : 'w-1 bg-white/20'
+                  'h-1.5 rounded-full transition-all',
+                  i === currentStep ? 'w-6 bg-[#FFE135]' : 'w-1.5 bg-white/20'
                 )}
               />
             ))}
           </div>
 
-          <h3 className="font-semibold text-white text-sm mb-1">{step.title}</h3>
-          <p className="text-zinc-400 text-xs leading-relaxed mb-4">{step.description}</p>
+          <h3 className="font-black text-white text-base mb-2 uppercase">{step.title}</h3>
+          <p className="text-zinc-400 text-sm leading-relaxed mb-5 font-medium">{step.description}</p>
 
           <div className="flex items-center justify-between">
             <button
               onClick={handleSkip}
-              className="text-xs text-zinc-500 hover:text-white transition-colors"
+              className="text-xs text-zinc-500 hover:text-white transition-colors font-bold uppercase tracking-wide"
             >
-              Skip tour
+              Skip
             </button>
             <button
               onClick={handleNext}
-              className="px-4 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-white text-xs font-medium rounded-lg transition-colors"
+              className="btn-lunchly px-5 py-2 text-xs"
             >
               {currentStep < steps.length - 1 ? 'Next' : 'Got it!'}
             </button>

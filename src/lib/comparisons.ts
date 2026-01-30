@@ -12,7 +12,7 @@ import { ERA_ORDER, LOCATION_REGIONS, MENTIONS_RANGES } from './constants';
 export const MATCH_COLORS: Record<MatchResult, string> = {
   exact: 'bg-emerald-500',
   partial: 'bg-amber-500',
-  wrong: 'bg-red-500/70',
+  wrong: 'bg-red-500',
 };
 
 export const MATCH_ICONS: Record<MatchResult, string> = {

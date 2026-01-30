@@ -12,58 +12,58 @@ export function HelpModal({ isOpen, onClose }: HelpModalProps) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="space-y-6">
         <div>
-          <h2 className="text-xl font-bold text-white">How to Play</h2>
-          <p className="text-zinc-400 text-sm mt-1">
+          <h2 className="text-2xl font-black text-white uppercase">How to Play</h2>
+          <p className="text-zinc-400 text-sm mt-1 font-medium">
             Guess the Islamic figure in 6 tries
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <div>
-            <h3 className="font-semibold text-white text-sm mb-2">Classic Mode</h3>
-            <p className="text-zinc-400 text-sm">
+            <h3 className="font-black text-white text-sm mb-2 uppercase text-[#00D4FF]">Classic Mode</h3>
+            <p className="text-zinc-400 text-sm font-medium">
               Guess based on attribute hints. After each guess, colors show how close you are:
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
-              <span className="px-3 py-1.5 bg-emerald-500 rounded-lg text-white text-xs font-medium">
-                Exact match
+              <span className="px-4 py-2 bg-emerald-500 rounded-xl text-white text-xs font-bold uppercase">
+                Exact
               </span>
-              <span className="px-3 py-1.5 bg-amber-500 rounded-lg text-white text-xs font-medium">
+              <span className="px-4 py-2 bg-amber-500 rounded-xl text-white text-xs font-bold uppercase">
                 Close
               </span>
-              <span className="px-3 py-1.5 bg-red-500/70 rounded-lg text-white text-xs font-medium">
+              <span className="px-4 py-2 bg-red-500 rounded-xl text-white text-xs font-bold uppercase">
                 Wrong
               </span>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm mb-2">Quote Mode</h3>
-            <p className="text-zinc-400 text-sm">
+            <h3 className="font-black text-white text-sm mb-2 uppercase text-[#A855F7]">Quote Mode</h3>
+            <p className="text-zinc-400 text-sm font-medium">
               A famous quote is shown. Guess who said it! Hints are revealed after each wrong guess.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold text-white text-sm mb-2">Categories</h3>
+            <h3 className="font-black text-white text-sm mb-2 uppercase text-[#FFE135]">Categories</h3>
             <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2 text-zinc-400">
-                <span className="text-emerald-400 mt-0.5">•</span>
-                <span><span className="text-white">Prophets</span> - Messengers mentioned in the Quran</span>
+              <li className="flex items-start gap-3 text-zinc-400">
+                <span className="w-2 h-2 rounded-full bg-[#00D4FF] mt-1.5 shrink-0"></span>
+                <span><span className="text-white font-bold">Prophets</span> - Messengers mentioned in the Quran</span>
               </li>
-              <li className="flex items-start gap-2 text-zinc-400">
-                <span className="text-emerald-400 mt-0.5">•</span>
-                <span><span className="text-white">Sahabas</span> - Companions of the Prophet (PBUH)</span>
+              <li className="flex items-start gap-3 text-zinc-400">
+                <span className="w-2 h-2 rounded-full bg-[#A855F7] mt-1.5 shrink-0"></span>
+                <span><span className="text-white font-bold">Sahabas</span> - Companions of the Prophet (PBUH)</span>
               </li>
-              <li className="flex items-start gap-2 text-zinc-400">
-                <span className="text-emerald-400 mt-0.5">•</span>
-                <span><span className="text-white">Tabi&apos;een</span> - The generation after the Sahabas</span>
+              <li className="flex items-start gap-3 text-zinc-400">
+                <span className="w-2 h-2 rounded-full bg-[#FF4757] mt-1.5 shrink-0"></span>
+                <span><span className="text-white font-bold">Tabi&apos;een</span> - The generation after the Sahabas</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <p className="text-xs text-zinc-500 pt-2 border-t border-white/10">
+        <p className="text-xs text-zinc-500 pt-4 border-t-2 border-white/10 font-bold uppercase tracking-wide">
           A new challenge is available every minute!
         </p>
       </div>

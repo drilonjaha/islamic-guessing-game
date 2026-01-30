@@ -1,7 +1,6 @@
 'use client';
 
 import { Modal } from '@/components/ui/Modal';
-import { Button } from '@/components/ui/Button';
 import { GuessResult, Category, GameMode, IslamicFigure } from '@/types';
 import { generateShareText, shareResults } from '@/lib/share';
 import { useState } from 'react';
@@ -43,63 +42,59 @@ export function GameOverModal({
         <div>
           {won ? (
             <>
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
+              <div className="w-20 h-20 rounded-2xl bg-[#FFE135]/20 flex items-center justify-center mx-auto mb-4 animate-bounce-slow">
+                <span className="text-4xl">🎉</span>
               </div>
-              <h2 className="text-2xl font-bold text-white">
-                Congratulations!
+              <h2 className="text-3xl font-black text-white uppercase">
+                You Got It!
               </h2>
-              <p className="text-zinc-400 mt-2">
-                You got it in {guesses.length} {guesses.length === 1 ? 'try' : 'tries'}
+              <p className="text-zinc-400 mt-2 font-bold">
+                In {guesses.length} {guesses.length === 1 ? 'try' : 'tries'}
               </p>
             </>
           ) : (
             <>
-              <div className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+              <div className="w-20 h-20 rounded-2xl bg-[#FF4757]/20 flex items-center justify-center mx-auto mb-4">
+                <span className="text-4xl">😅</span>
               </div>
-              <h2 className="text-2xl font-bold text-white">
-                Not this time
+              <h2 className="text-3xl font-black text-white uppercase">
+                Not This Time
               </h2>
-              <p className="text-zinc-400 mt-2">
+              <p className="text-zinc-400 mt-2 font-bold uppercase tracking-wide">
                 The answer was:
               </p>
             </>
           )}
         </div>
 
-        <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-          <p className="text-xl font-bold text-white">{answer.name}</p>
-          <p className="text-zinc-500 text-sm">{answer.nameArabic}</p>
+        <div className="card-bold rounded-2xl p-6">
+          <p className="text-2xl font-black text-[#FFE135]">{answer.name}</p>
+          <p className="text-zinc-500 text-sm font-arabic mt-1">{answer.nameArabic}</p>
         </div>
 
         <button
           onClick={handleShare}
-          className="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-medium transition-colors flex items-center justify-center gap-2"
+          className="btn-lunchly w-full py-4 flex items-center justify-center gap-3"
         >
           {copied ? (
             <>
-              <svg className="w-5 h-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
               Copied!
             </>
           ) : (
             <>
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
               </svg>
               Share Results
             </>
           )}
         </button>
 
-        <div className="pt-4 border-t border-white/10">
-          <p className="text-sm text-zinc-500 mb-3">Next round in:</p>
+        <div className="pt-6 border-t-2 border-white/10">
+          <p className="text-sm text-zinc-500 mb-4 font-bold uppercase tracking-wide">Next round in:</p>
           <Countdown />
         </div>
       </div>
