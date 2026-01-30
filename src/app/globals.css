@@ -236,3 +236,19 @@ body {
   backdrop-filter: blur(20px);
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
+
+/* Tooltip animation */
+@keyframes tooltipIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.animate-tooltip {
+  animation: tooltipIn 0.15s ease-out forwards;
+}
