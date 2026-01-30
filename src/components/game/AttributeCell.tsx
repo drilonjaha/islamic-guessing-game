@@ -16,11 +16,6 @@ const TOOLTIP_COLORS: Record<MatchResult, { bg: string; border: string; accent: 
   wrong: { bg: 'bg-red-950', border: 'border-red-500', accent: 'text-red-400' },
 };
 
-const TOOLTIP_ARROWS: Record<MatchResult, string> = {
-  exact: 'border-t-emerald-950',
-  partial: 'border-t-amber-950',
-  wrong: 'border-t-red-950',
-};
 
 function getTooltipContent(result: AttributeResult): { title: string; description: string } {
   const { attribute, result: matchResult, hint, guessValue } = result;
@@ -101,7 +96,6 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
 
   const { title, description } = getTooltipContent(result);
   const tooltipStyle = TOOLTIP_COLORS[result.result];
-  const arrowColor = TOOLTIP_ARROWS[result.result];
 
   return (
     <div
@@ -133,16 +127,24 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
         )}
       </div>
 
-      {/* Tooltip */}
+      {/* Tooltip - shows below the cell */}
       {showTooltip && (
         <div
           className={cn(
             'absolute z-50',
             'w-52 sm:w-64',
-            'bottom-full left-1/2 mb-3',
-            'animate-tooltip'
+            'top-full left-1/2 -translate-x-1/2 mt-3',
+            'animate-tooltip-down'
           )}
         >
+          {/* Arrow pointing up */}
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[-1px]">
+            <div className={cn(
+              'border-8 border-transparent',
+              result.result === 'exact' ? 'border-b-emerald-500' :
+              result.result === 'partial' ? 'border-b-amber-500' : 'border-b-red-500'
+            )}></div>
+          </div>
           <div
             className={cn(
               'rounded-2xl overflow-hidden',
@@ -163,10 +165,6 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
             <div className="px-4 pb-3 text-white/90 text-xs leading-relaxed">
               {description}
             </div>
-          </div>
-          {/* Arrow */}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-            <div className={cn('border-8 border-transparent', arrowColor)}></div>
           </div>
         </div>
       )}

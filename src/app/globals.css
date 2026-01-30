@@ -237,11 +237,11 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Tooltip animation */
-@keyframes tooltipIn {
+/* Tooltip animation - shows below */
+@keyframes tooltipDown {
   0% {
     opacity: 0;
-    transform: translateX(-50%) translateY(4px) scale(0.95);
+    transform: translateX(-50%) translateY(-4px) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -249,6 +249,6 @@ body {
   }
 }
 
-.animate-tooltip {
-  animation: tooltipIn 0.15s ease-out forwards;
+.animate-tooltip-down {
+  animation: tooltipDown 0.15s ease-out forwards;
 }
