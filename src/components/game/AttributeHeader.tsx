@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Category } from '@/types';
 import { getAttributesForCategory } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -56,95 +56,102 @@ function getDescription(category: Category, attribute: string): string {
   return 'No description available';
 }
 
-function AttributeTooltip({ attribute, category }: { attribute: string; category: Category }) {
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
-  const buttonRef = useRef<HTMLDivElement>(null);
+// Modal component that shows in center of screen
+function AttributeModal({
+  attribute,
+  description,
+  onClose
+}: {
+  attribute: string;
+  description: string;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/70" />
+
+      {/* Modal */}
+      <div
+        className="relative bg-[#0D0D0D] border-2 border-[#FFE135] rounded-2xl p-6 max-w-sm w-full shadow-2xl animate-pop"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="text-[#FFE135] font-black text-lg uppercase mb-3">{attribute}</div>
+        <div className="text-white text-sm leading-relaxed mb-4">{description}</div>
+        <button
+          onClick={onClose}
+          className="w-full py-3 bg-[#FFE135] text-black font-bold rounded-xl uppercase text-sm hover:bg-[#FFE135]/90 transition-colors"
+        >
+          Got it
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AttributeButton({
+  attribute,
+  category,
+  onShowInfo
+}: {
+  attribute: string;
+  category: Category;
+  onShowInfo: (attr: string, desc: string) => void;
+}) {
   const description = getDescription(category, attribute);
 
-  useEffect(() => {
-    if (showTooltip && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const tooltipWidth = 256; // w-64 = 16rem = 256px
-
-      // Position above the button, centered
-      let left = rect.left + rect.width / 2 - tooltipWidth / 2;
-
-      // Keep tooltip within viewport
-      if (left < 8) left = 8;
-      if (left + tooltipWidth > window.innerWidth - 8) {
-        left = window.innerWidth - tooltipWidth - 8;
-      }
-
-      setTooltipPos({
-        top: rect.top - 12, // 12px gap above button
-        left: left,
-      });
-    }
-  }, [showTooltip]);
-
   return (
-    <>
-      {/* Backdrop to close tooltip when clicking outside */}
-      {showTooltip && (
-        <div
-          className="fixed inset-0 z-[9998]"
-          onClick={() => setShowTooltip(false)}
-        />
-      )}
-      <div
-        ref={buttonRef}
-        className="relative shrink-0 w-16 sm:w-20"
-        onClick={() => setShowTooltip(!showTooltip)}
-      >
-        <div className={cn(
-          "text-center text-[10px] uppercase tracking-wider font-bold py-2 cursor-pointer transition-colors flex items-center justify-center gap-0.5",
-          showTooltip ? "text-[#FFE135]" : "text-zinc-500 hover:text-zinc-300"
-        )}>
-          <span>{attribute}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-        </div>
+    <div
+      className="shrink-0 w-16 sm:w-20 cursor-pointer"
+      onClick={() => onShowInfo(attribute, description)}
+    >
+      <div className="text-center text-[10px] text-zinc-500 uppercase tracking-wider font-bold py-2 hover:text-[#FFE135] transition-colors flex items-center justify-center gap-0.5">
+        <span>{attribute}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
       </div>
-
-      {/* Fixed position tooltip - renders outside overflow containers */}
-      {showTooltip && (
-        <div
-          className="fixed z-[9999] w-64 animate-tooltip-up"
-          style={{
-            top: tooltipPos.top,
-            left: tooltipPos.left,
-            transform: 'translateY(-100%)',
-          }}
-        >
-          <div className="rounded-2xl bg-[#0D0D0D] border-2 border-[#FFE135] p-4 shadow-2xl">
-            <div className="text-[#FFE135] font-black text-sm uppercase mb-2">{attribute}</div>
-            <div className="text-white text-xs leading-relaxed">{description}</div>
-          </div>
-          {/* Arrow pointing down */}
-          <div className="flex justify-center -mt-[1px]">
-            <div className="border-8 border-transparent border-t-[#FFE135]"></div>
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 }
 
 export function AttributeHeader({ category }: AttributeHeaderProps) {
   const attributes = getAttributesForCategory(category);
+  const [modalData, setModalData] = useState<{ attribute: string; description: string } | null>(null);
+
+  const handleShowInfo = (attribute: string, description: string) => {
+    setModalData({ attribute, description });
+  };
 
   return (
-    <div className="flex items-center gap-1.5">
-      <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-[#FFE135] uppercase tracking-wider font-bold py-2">
-        Name
+    <>
+      <div className="flex items-center gap-1.5">
+        <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-[#FFE135] uppercase tracking-wider font-bold py-2">
+          Name
+        </div>
+        {attributes.map((attr) => (
+          <AttributeButton
+            key={attr}
+            attribute={attr}
+            category={category}
+            onShowInfo={handleShowInfo}
+          />
+        ))}
       </div>
-      {attributes.map((attr) => (
-        <AttributeTooltip key={attr} attribute={attr} category={category} />
-      ))}
-    </div>
+
+      {/* Modal renders at root level - completely outside any overflow containers */}
+      {modalData && (
+        <AttributeModal
+          attribute={modalData.attribute}
+          description={modalData.description}
+          onClose={() => setModalData(null)}
+        />
+      )}
+    </>
   );
 }
