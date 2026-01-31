@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { cn } from '@/lib/utils';
 import { AttributeResult, MatchResult } from '@/types';
 import { MATCH_COLORS } from '@/lib/comparisons';
@@ -10,14 +11,7 @@ interface AttributeCellProps {
   delay?: number;
 }
 
-const TOOLTIP_COLORS: Record<MatchResult, { bg: string; border: string; accent: string }> = {
-  exact: { bg: 'bg-emerald-950', border: 'border-emerald-500', accent: 'text-emerald-400' },
-  partial: { bg: 'bg-amber-950', border: 'border-amber-500', accent: 'text-amber-400' },
-  wrong: { bg: 'bg-red-950', border: 'border-red-500', accent: 'text-red-400' },
-};
-
-
-function getTooltipContent(result: AttributeResult): { title: string; description: string } {
+function getTooltipText(result: AttributeResult): string {
   const { attribute, result: matchResult, hint, guessValue } = result;
 
   const formatValue = (v: unknown) => {
@@ -26,66 +20,164 @@ function getTooltipContent(result: AttributeResult): { title: string; descriptio
   };
 
   const guessDisplay = formatValue(guessValue);
+  const isYes = guessValue === true;
+  const isNo = guessValue === false;
 
-  let title = '';
-  let description = '';
-
+  // Generate natural language descriptions
   if (matchResult === 'exact') {
-    title = 'Exact Match!';
-    description = `${attribute} is correct.`;
-  } else if (matchResult === 'partial') {
-    title = 'Close!';
     switch (attribute) {
       case 'Era':
-        description = `"${guessDisplay}" is within 1000 years of the answer.`;
-        break;
+        return `Correct! The answer is from ${guessDisplay}.`;
       case 'Region':
-        description = `"${guessDisplay}" is in the same general region.`;
-        break;
+        return `Correct! The answer is from ${guessDisplay}.`;
+      case 'Tribe':
+        return `Correct! The answer is from ${guessDisplay}.`;
       case 'Mentions':
-        description = `${guessDisplay} mentions is in a nearby range.`;
-        break;
+        return `Correct! The answer is mentioned ${guessDisplay} times in the Quran.`;
+      case 'Book':
+        return guessDisplay === 'None'
+          ? `Correct! The answer had no book revealed to them.`
+          : `Correct! The answer had the ${guessDisplay} revealed to them.`;
+      case 'Ul al-Azm':
+        return isYes
+          ? `Correct! The answer is one of the Ul al-Azm (5 greatest prophets).`
+          : `Correct! The answer is not one of the Ul al-Azm.`;
+      case 'King':
+        return isYes
+          ? `Correct! The answer was a king.`
+          : `Correct! The answer was not a king.`;
+      case 'Gender':
+        return `Correct! The answer is ${guessDisplay.toLowerCase()}.`;
       case 'Conversion':
-        description = `"${guessDisplay}" is an adjacent conversion period.`;
-        break;
-      case 'Generation':
-        description = `"${guessDisplay}" is an adjacent generation.`;
-        break;
-      case 'Teachers':
-        description = `Some teachers overlap with the answer.`;
-        break;
-      case 'Specialty':
-        description = `Some specialties overlap with the answer.`;
-        break;
-      case 'Students':
-        description = `Some students overlap with the answer.`;
-        break;
-      case 'Death Year':
-        description = `${guessDisplay} AH is within 20% of the answer.`;
-        break;
+        return `Correct! The answer converted during ${guessDisplay}.`;
+      case 'Ashara':
+        return isYes
+          ? `Correct! The answer is one of the 10 promised Paradise.`
+          : `Correct! The answer is not one of the 10 promised Paradise.`;
+      case 'Badr':
+        return isYes
+          ? `Correct! The answer participated in Badr.`
+          : `Correct! The answer did not participate in Badr.`;
       case 'Hadith':
-        description = `${guessDisplay} hadiths is within 20% of the answer.`;
-        break;
+        return `Correct! The answer narrated ${guessDisplay} hadiths.`;
+      case 'Relation':
+        return guessDisplay === 'none'
+          ? `Correct! The answer had no family relation to the Prophet.`
+          : `Correct! The answer was a ${guessDisplay} of the Prophet.`;
+      case 'Martyred':
+        return isYes
+          ? `Correct! The answer was martyred.`
+          : `Correct! The answer was not martyred.`;
+      case 'Abyssinia':
+        return isYes
+          ? `Correct! The answer migrated to Abyssinia.`
+          : `Correct! The answer did not migrate to Abyssinia.`;
       default:
-        description = `"${guessDisplay}" is similar to the answer.`;
+        return `Correct! The answer's ${attribute.toLowerCase()} is ${guessDisplay}.`;
     }
-  } else {
-    title = 'Wrong';
-    description = `The answer's ${attribute.toLowerCase()} is not "${guessDisplay}".`;
   }
 
-  // Add hint explanation
-  if (hint) {
-    const arrow = hint === 'higher' ? '↑' : '↓';
-    const direction = hint === 'higher' ? 'higher' : 'lower';
-    description += ` ${arrow} The answer is ${direction}.`;
+  if (matchResult === 'wrong') {
+    switch (attribute) {
+      case 'Era':
+        return `The answer is not from ${guessDisplay}.`;
+      case 'Region':
+        return `The answer is not from ${guessDisplay}.`;
+      case 'Tribe':
+        return `The answer is not from ${guessDisplay}.`;
+      case 'Mentions':
+        const dir = hint === 'higher' ? 'more' : 'fewer';
+        return `The answer is mentioned ${dir} than ${guessDisplay} times.`;
+      case 'Book':
+        return guessDisplay === 'None'
+          ? `The answer had a book revealed to them.`
+          : `The answer did not have the ${guessDisplay} revealed.`;
+      case 'Ul al-Azm':
+        return isYes
+          ? `The answer is not one of the Ul al-Azm (5 greatest prophets).`
+          : `The answer is one of the Ul al-Azm (5 greatest prophets).`;
+      case 'King':
+        return isYes
+          ? `The answer was not a king.`
+          : `The answer was a king.`;
+      case 'Gender':
+        return `The answer is not ${guessDisplay.toLowerCase()}.`;
+      case 'Conversion':
+        return `The answer did not convert during ${guessDisplay}.`;
+      case 'Ashara':
+        return isYes
+          ? `The answer is not one of the 10 promised Paradise.`
+          : `The answer is one of the 10 promised Paradise.`;
+      case 'Badr':
+        return isYes
+          ? `The answer did not participate in Badr.`
+          : `The answer participated in Badr.`;
+      case 'Hadith':
+        const hadithDir = hint === 'higher' ? 'more' : 'fewer';
+        return `The answer narrated ${hadithDir} than ${guessDisplay} hadiths.`;
+      case 'Relation':
+        return guessDisplay === 'none'
+          ? `The answer has a family relation to the Prophet.`
+          : `The answer was not a ${guessDisplay} of the Prophet.`;
+      case 'Martyred':
+        return isYes
+          ? `The answer was not martyred.`
+          : `The answer was martyred.`;
+      case 'Abyssinia':
+        return isYes
+          ? `The answer did not migrate to Abyssinia.`
+          : `The answer migrated to Abyssinia.`;
+      case 'School':
+        return `The answer is not from the ${guessDisplay} school.`;
+      case 'Generation':
+        return `The answer is not from the ${guessDisplay} generation.`;
+      case 'Death Year':
+        const yearDir = hint === 'higher' ? 'later' : 'earlier';
+        return `The answer died ${yearDir} than ${guessDisplay} AH.`;
+      case 'Birth City':
+        return `The answer was not born in ${guessDisplay}.`;
+      case 'Role':
+        return `The answer's role was not ${guessDisplay}.`;
+      default:
+        return `The answer's ${attribute.toLowerCase()} is not ${guessDisplay}.`;
+    }
   }
 
-  return { title, description };
+  // Partial match
+  switch (attribute) {
+    case 'Era':
+      return `Close! The answer is from a nearby time period.`;
+    case 'Region':
+      return `Close! The answer is from the same region.`;
+    case 'Mentions':
+      const mentionDir = hint === 'higher' ? 'more' : 'fewer';
+      return `Close! The answer is mentioned ${mentionDir} times, but nearby.`;
+    case 'Conversion':
+      return `Close! The answer converted in an adjacent period.`;
+    case 'Generation':
+      return `Close! The answer is from an adjacent generation.`;
+    case 'Teachers':
+      return `Some teachers overlap with the answer.`;
+    case 'Specialty':
+      return `Some specialties overlap with the answer.`;
+    case 'Students':
+      return `Some students overlap with the answer.`;
+    case 'Death Year':
+      const deathDir = hint === 'higher' ? 'later' : 'earlier';
+      return `Close! The answer died ${deathDir}, but nearby.`;
+    case 'Hadith':
+      const hDir = hint === 'higher' ? 'more' : 'fewer';
+      return `Close! The answer narrated ${hDir} hadiths, but nearby.`;
+    default:
+      return `Close! The answer is similar.`;
+  }
 }
 
 export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [mounted, setMounted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const displayValue =
     typeof result.guessValue === 'boolean'
@@ -94,80 +186,85 @@ export function AttributeCell({ result, delay = 0 }: AttributeCellProps) {
         : 'No'
       : result.guessValue;
 
-  const { title, description } = getTooltipContent(result);
-  const tooltipStyle = TOOLTIP_COLORS[result.result];
+  const tooltipText = getTooltipText(result);
 
-  return (
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isHovered && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const tooltipWidth = 260;
+
+      let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+      if (left < 10) left = 10;
+      if (left + tooltipWidth > window.innerWidth - 10) {
+        left = window.innerWidth - tooltipWidth - 10;
+      }
+
+      setPosition({
+        top: rect.bottom + 8,
+        left: left,
+      });
+    }
+  }, [isHovered]);
+
+  const borderColor = result.result === 'exact' ? '#10B981' : result.result === 'partial' ? '#F59E0B' : '#EF4444';
+
+  const tooltip = isHovered && mounted ? createPortal(
     <div
-      className="relative"
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-      onClick={() => setShowTooltip(!showTooltip)}
+      style={{
+        position: 'fixed',
+        top: position.top,
+        left: position.left,
+        width: 260,
+        zIndex: 99999,
+      }}
+      className="animate-pop"
     >
       <div
-        className={cn(
-          'shrink-0 flex flex-col items-center justify-center cursor-pointer',
-          'rounded-xl w-16 sm:w-20 h-12 sm:h-14',
-          'text-white font-bold',
-          'transition-all duration-300',
-          MATCH_COLORS[result.result]
-        )}
-        style={{
-          animationDelay: `${delay}ms`,
-          animation: 'flipIn 0.4s ease-out forwards',
-        }}
+        className="bg-[#0D0D0D] rounded-xl p-3 shadow-2xl"
+        style={{ border: `2px solid ${borderColor}` }}
       >
-        <span className="text-[9px] sm:text-[10px] font-bold text-center leading-tight px-0.5 line-clamp-2 uppercase">
-          {displayValue}
-        </span>
-        {result.hint && (
-          <span className="text-xs mt-0.5 font-black">
-            {result.hint === 'higher' ? '↑' : '↓'}
-          </span>
-        )}
+        <div className="text-white text-xs leading-relaxed">{tooltipText}</div>
       </div>
+    </div>,
+    document.body
+  ) : null;
 
-      {/* Tooltip - shows below the cell */}
-      {showTooltip && (
+  return (
+    <>
+      <div
+        ref={ref}
+        className="relative"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <div
           className={cn(
-            'absolute z-50',
-            'w-52 sm:w-64',
-            'top-full left-1/2 -translate-x-1/2 mt-3',
-            'animate-tooltip-down'
+            'shrink-0 flex flex-col items-center justify-center cursor-help',
+            'rounded-xl w-16 sm:w-20 h-12 sm:h-14',
+            'text-white font-bold',
+            'transition-all duration-300',
+            MATCH_COLORS[result.result]
           )}
+          style={{
+            animationDelay: `${delay}ms`,
+            animation: 'flipIn 0.4s ease-out forwards',
+          }}
         >
-          {/* Arrow pointing up */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[-1px]">
-            <div className={cn(
-              'border-8 border-transparent',
-              result.result === 'exact' ? 'border-b-emerald-500' :
-              result.result === 'partial' ? 'border-b-amber-500' : 'border-b-red-500'
-            )}></div>
-          </div>
-          <div
-            className={cn(
-              'rounded-2xl overflow-hidden',
-              'border-2',
-              'shadow-xl',
-              tooltipStyle.bg,
-              tooltipStyle.border
-            )}
-          >
-            {/* Header */}
-            <div className={cn(
-              'px-4 py-2 font-black text-sm uppercase tracking-wide',
-              tooltipStyle.accent
-            )}>
-              {title}
-            </div>
-            {/* Body */}
-            <div className="px-4 pb-3 text-white/90 text-xs leading-relaxed">
-              {description}
-            </div>
-          </div>
+          <span className="text-[9px] sm:text-[10px] font-bold text-center leading-tight px-0.5 line-clamp-2 uppercase">
+            {displayValue}
+          </span>
+          {result.hint && (
+            <span className="text-xs mt-0.5 font-black">
+              {result.hint === 'higher' ? '↑' : '↓'}
+            </span>
+          )}
         </div>
-      )}
-    </div>
+      </div>
+      {tooltip}
+    </>
   );
 }
