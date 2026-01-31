@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Category } from '@/types';
 import { getAttributesForCategory } from '@/lib/constants';
-import { cn } from '@/lib/utils';
 
 interface AttributeHeaderProps {
   category: Category;
@@ -45,115 +45,99 @@ const TABIEEN_DESCRIPTIONS: Record<string, string> = {
 
 function getDescription(category: Category, attribute: string): string {
   if (category === 'prophet') {
-    return PROPHET_DESCRIPTIONS[attribute] || 'No description available';
+    return PROPHET_DESCRIPTIONS[attribute] || '';
   }
   if (category === 'sahaba') {
-    return SAHABA_DESCRIPTIONS[attribute] || 'No description available';
+    return SAHABA_DESCRIPTIONS[attribute] || '';
   }
   if (category === 'tabieen') {
-    return TABIEEN_DESCRIPTIONS[attribute] || 'No description available';
+    return TABIEEN_DESCRIPTIONS[attribute] || '';
   }
-  return 'No description available';
+  return '';
 }
 
-// Modal component that shows in center of screen
-function AttributeModal({
-  attribute,
-  description,
-  onClose
-}: {
-  attribute: string;
-  description: string;
-  onClose: () => void;
-}) {
-  return (
-    <div
-      className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-      onMouseEnter={onClose}
-    >
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" />
-
-      {/* Modal */}
-      <div
-        className="relative bg-[#0D0D0D] border-2 border-[#FFE135] rounded-2xl p-5 max-w-xs w-full shadow-2xl animate-pop"
-        onMouseEnter={(e) => e.stopPropagation()}
-      >
-        <div className="text-[#FFE135] font-black text-base uppercase mb-2">{attribute}</div>
-        <div className="text-white text-sm leading-relaxed">{description}</div>
-      </div>
-    </div>
-  );
-}
-
-function AttributeButton({
-  attribute,
-  category,
-  onShowInfo,
-  onHideInfo
-}: {
-  attribute: string;
-  category: Category;
-  onShowInfo: (attr: string, desc: string) => void;
-  onHideInfo: () => void;
-}) {
+function AttributeTooltip({ attribute, category }: { attribute: string; category: Category }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [mounted, setMounted] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const description = getDescription(category, attribute);
 
-  return (
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isHovered && ref.current) {
+      const rect = ref.current.getBoundingClientRect();
+      const tooltipWidth = 240;
+
+      let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+      // Keep within viewport
+      if (left < 10) left = 10;
+      if (left + tooltipWidth > window.innerWidth - 10) {
+        left = window.innerWidth - tooltipWidth - 10;
+      }
+
+      setPosition({
+        top: rect.bottom + 8,
+        left: left,
+      });
+    }
+  }, [isHovered]);
+
+  const tooltip = isHovered && mounted && description ? createPortal(
     <div
-      className="shrink-0 w-16 sm:w-20 cursor-pointer"
-      onMouseEnter={() => onShowInfo(attribute, description)}
-      onMouseLeave={onHideInfo}
+      style={{
+        position: 'fixed',
+        top: position.top,
+        left: position.left,
+        width: 240,
+        zIndex: 99999,
+      }}
+      className="animate-pop"
     >
-      <div className="text-center text-[10px] text-zinc-500 uppercase tracking-wider font-bold py-2 hover:text-[#FFE135] transition-colors flex items-center justify-center gap-0.5">
-        <span>{attribute}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
-          <circle cx="12" cy="12" r="10"/>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-          <line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
+      <div className="bg-[#0D0D0D] border-2 border-[#FFE135] rounded-xl p-3 shadow-2xl">
+        <div className="text-[#FFE135] font-bold text-xs uppercase mb-1">{attribute}</div>
+        <div className="text-white text-xs leading-relaxed">{description}</div>
       </div>
-    </div>
+    </div>,
+    document.body
+  ) : null;
+
+  return (
+    <>
+      <div
+        ref={ref}
+        className="shrink-0 w-16 sm:w-20 cursor-help"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className="text-center text-[10px] text-zinc-500 uppercase tracking-wider font-bold py-2 hover:text-[#FFE135] transition-colors flex items-center justify-center gap-0.5">
+          <span>{attribute}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="opacity-50">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+      </div>
+      {tooltip}
+    </>
   );
 }
 
 export function AttributeHeader({ category }: AttributeHeaderProps) {
   const attributes = getAttributesForCategory(category);
-  const [modalData, setModalData] = useState<{ attribute: string; description: string } | null>(null);
-
-  const handleShowInfo = (attribute: string, description: string) => {
-    setModalData({ attribute, description });
-  };
-
-  const handleHideInfo = () => {
-    setModalData(null);
-  };
 
   return (
-    <>
-      <div className="flex items-center gap-1.5">
-        <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-[#FFE135] uppercase tracking-wider font-bold py-2">
-          Name
-        </div>
-        {attributes.map((attr) => (
-          <AttributeButton
-            key={attr}
-            attribute={attr}
-            category={category}
-            onShowInfo={handleShowInfo}
-            onHideInfo={handleHideInfo}
-          />
-        ))}
+    <div className="flex items-center gap-1.5">
+      <div className="shrink-0 w-20 sm:w-24 text-center text-[10px] text-[#FFE135] uppercase tracking-wider font-bold py-2">
+        Name
       </div>
-
-      {/* Modal renders at root level - completely outside any overflow containers */}
-      {modalData && (
-        <AttributeModal
-          attribute={modalData.attribute}
-          description={modalData.description}
-          onClose={() => setModalData(null)}
-        />
-      )}
-    </>
+      {attributes.map((attr) => (
+        <AttributeTooltip key={attr} attribute={attr} category={category} />
+      ))}
+    </div>
   );
 }
