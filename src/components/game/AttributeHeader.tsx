@@ -69,24 +69,18 @@ function AttributeModal({
   return (
     <div
       className="fixed inset-0 z-[99999] flex items-center justify-center p-4"
-      onClick={onClose}
+      onMouseEnter={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-black/50" />
 
       {/* Modal */}
       <div
-        className="relative bg-[#0D0D0D] border-2 border-[#FFE135] rounded-2xl p-6 max-w-sm w-full shadow-2xl animate-pop"
-        onClick={(e) => e.stopPropagation()}
+        className="relative bg-[#0D0D0D] border-2 border-[#FFE135] rounded-2xl p-5 max-w-xs w-full shadow-2xl animate-pop"
+        onMouseEnter={(e) => e.stopPropagation()}
       >
-        <div className="text-[#FFE135] font-black text-lg uppercase mb-3">{attribute}</div>
-        <div className="text-white text-sm leading-relaxed mb-4">{description}</div>
-        <button
-          onClick={onClose}
-          className="w-full py-3 bg-[#FFE135] text-black font-bold rounded-xl uppercase text-sm hover:bg-[#FFE135]/90 transition-colors"
-        >
-          Got it
-        </button>
+        <div className="text-[#FFE135] font-black text-base uppercase mb-2">{attribute}</div>
+        <div className="text-white text-sm leading-relaxed">{description}</div>
       </div>
     </div>
   );
@@ -95,18 +89,21 @@ function AttributeModal({
 function AttributeButton({
   attribute,
   category,
-  onShowInfo
+  onShowInfo,
+  onHideInfo
 }: {
   attribute: string;
   category: Category;
   onShowInfo: (attr: string, desc: string) => void;
+  onHideInfo: () => void;
 }) {
   const description = getDescription(category, attribute);
 
   return (
     <div
       className="shrink-0 w-16 sm:w-20 cursor-pointer"
-      onClick={() => onShowInfo(attribute, description)}
+      onMouseEnter={() => onShowInfo(attribute, description)}
+      onMouseLeave={onHideInfo}
     >
       <div className="text-center text-[10px] text-zinc-500 uppercase tracking-wider font-bold py-2 hover:text-[#FFE135] transition-colors flex items-center justify-center gap-0.5">
         <span>{attribute}</span>
@@ -128,6 +125,10 @@ export function AttributeHeader({ category }: AttributeHeaderProps) {
     setModalData({ attribute, description });
   };
 
+  const handleHideInfo = () => {
+    setModalData(null);
+  };
+
   return (
     <>
       <div className="flex items-center gap-1.5">
@@ -140,6 +141,7 @@ export function AttributeHeader({ category }: AttributeHeaderProps) {
             attribute={attr}
             category={category}
             onShowInfo={handleShowInfo}
+            onHideInfo={handleHideInfo}
           />
         ))}
       </div>
