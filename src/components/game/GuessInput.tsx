@@ -38,7 +38,7 @@ function CategoryIcon({ category, className }: { category: Category; className?:
 }
 
 // Highlighted text component
-function HighlightedName({ name, query }: { name: string; query: string }) {
+function HighlightedName({ name, query, isSelected }: { name: string; query: string; isSelected?: boolean }) {
   const highlight = highlightMatch(name, query);
 
   if (!highlight) {
@@ -48,7 +48,12 @@ function HighlightedName({ name, query }: { name: string; query: string }) {
   return (
     <span>
       {highlight.before}
-      <span className="bg-[#FFE135]/30 text-[#FFE135] rounded px-0.5">{highlight.match}</span>
+      <span className={cn(
+        'rounded px-0.5 font-extrabold',
+        isSelected
+          ? 'bg-black/20 text-black'
+          : 'bg-[#FFE135]/30 text-[#FFE135]'
+      )}>{highlight.match}</span>
       {highlight.after}
     </span>
   );
@@ -203,7 +208,7 @@ export function GuessInput({ category, onGuess, disabled, guessedIds }: GuessInp
         {/* Name and subtitle */}
         <div className="flex-1 min-w-0">
           <div className={cn('font-bold truncate', isMobile ? 'text-base' : 'text-sm')}>
-            <HighlightedName name={result.figure.name} query={query} />
+            <HighlightedName name={result.figure.name} query={query} isSelected={isSelected} />
           </div>
           <div className={cn(
             'truncate',
