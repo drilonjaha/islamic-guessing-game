@@ -204,7 +204,7 @@ export function OnboardingGuide({ onComplete, currentStep, setCurrentStep }: Onb
   );
 }
 
-// Hook to manage onboarding state
+// Hook to manage onboarding state - persists to localStorage
 export function useOnboarding() {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
@@ -213,12 +213,19 @@ export function useOnboarding() {
     // Only run on client
     if (typeof window === 'undefined') return;
 
-    // Always show onboarding on first load (no persistence)
-    setTimeout(() => setShowOnboarding(true), 500);
+    // Check if user has completed onboarding before
+    const hasCompletedOnboarding = localStorage.getItem('onboarding-completed');
+
+    if (!hasCompletedOnboarding) {
+      // First time user - show onboarding after a short delay
+      setTimeout(() => setShowOnboarding(true), 500);
+    }
   }, []);
 
   const completeOnboarding = () => {
     setShowOnboarding(false);
+    // Save to localStorage so it doesn't show again
+    localStorage.setItem('onboarding-completed', 'true');
   };
 
   const resetOnboarding = () => {
