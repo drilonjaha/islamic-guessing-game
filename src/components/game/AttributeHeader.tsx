@@ -9,43 +9,56 @@ interface AttributeHeaderProps {
   category: Category;
 }
 
-// Descriptions for each attribute
-const ATTRIBUTE_DESCRIPTIONS: Record<string, Record<string, string>> = {
-  prophet: {
-    Era: 'The time period when this prophet lived (e.g., 13th Century BCE)',
-    Region: 'The geographic area where they primarily lived and taught',
-    Tribe: 'The tribe or people they belonged to or were sent to',
-    Mentions: 'How many times they are mentioned by name in the Quran',
-    Book: 'The holy scripture revealed to them (if any)',
-    'Ul al-Azm': 'One of the 5 greatest prophets: Nuh, Ibrahim, Musa, Isa, Muhammad (PBUT)',
-    King: 'Whether they were also a king/ruler (like Dawud and Sulaiman)',
-  },
-  sahaba: {
-    Gender: 'Male or female companion',
-    Tribe: 'Their tribal affiliation (e.g., Quraysh, Aws, Khazraj)',
-    Conversion: 'When they accepted Islam: Early Makkah, Late Makkah, Early Madinah, Late Madinah, or Conquest of Makkah',
-    Ashara: 'One of the 10 companions promised Paradise (Ashara Mubashareen)',
-    Badr: 'Whether they participated in the Battle of Badr',
-    Hadith: 'Approximate number of hadiths they narrated',
-    Relation: 'Family relation to Prophet Muhammad (PBUH): wife, daughter, son-in-law, uncle, cousin, or none',
-    Martyred: 'Whether they died as a martyr (shaheed)',
-    Abyssinia: 'Whether they migrated to Abyssinia (Ethiopia) during persecution',
-  },
-  tabieen: {
-    School: 'The city/school of knowledge they were associated with (Madinah, Makkah, Kufa, Basra, etc.)',
-    Generation: 'Senior (met many Sahaba), Middle, or Junior Tabi\'i',
-    Teachers: 'The Sahaba or scholars they learned from',
-    Specialty: 'Their area of expertise: Fiqh, Hadith, Tafsir, Qiraat, or Zuhd (asceticism)',
-    'Death Year': 'The year they passed away (in Hijri calendar)',
-    'Birth City': 'The city where they were born',
-    Role: 'Their primary role: Judge, Mufti, Teacher, Scholar, or Ascetic',
-    Students: 'Famous scholars who learned from them',
-  },
+// Descriptions for each attribute - using simple objects without special characters in values
+const PROPHET_DESCRIPTIONS: Record<string, string> = {
+  'Era': 'The time period when this prophet lived',
+  'Region': 'The geographic area where they primarily lived and taught',
+  'Tribe': 'The tribe or people they belonged to or were sent to',
+  'Mentions': 'How many times they are mentioned by name in the Quran',
+  'Book': 'The holy scripture revealed to them, if any',
+  'Ul al-Azm': 'One of the 5 greatest prophets - Nuh, Ibrahim, Musa, Isa, Muhammad',
+  'King': 'Whether they were also a king or ruler',
 };
+
+const SAHABA_DESCRIPTIONS: Record<string, string> = {
+  'Gender': 'Male or female companion',
+  'Tribe': 'Their tribal affiliation',
+  'Conversion': 'When they accepted Islam - Early Makkah, Late Makkah, Early Madinah, Late Madinah, or Conquest',
+  'Ashara': 'One of the 10 companions promised Paradise',
+  'Badr': 'Whether they participated in the Battle of Badr',
+  'Hadith': 'Approximate number of hadiths they narrated',
+  'Relation': 'Family relation to the Prophet - wife, daughter, son-in-law, uncle, cousin, or none',
+  'Martyred': 'Whether they died as a martyr',
+  'Abyssinia': 'Whether they migrated to Abyssinia during persecution',
+};
+
+const TABIEEN_DESCRIPTIONS: Record<string, string> = {
+  'School': 'The city or school of knowledge they were associated with',
+  'Generation': 'Senior, Middle, or Junior generation of Tabieen',
+  'Teachers': 'The Sahaba or scholars they learned from',
+  'Specialty': 'Their area of expertise - Fiqh, Hadith, Tafsir, Qiraat, or Zuhd',
+  'Death Year': 'The year they passed away in Hijri calendar',
+  'Birth City': 'The city where they were born',
+  'Role': 'Their primary role - Judge, Mufti, Teacher, Scholar, or Ascetic',
+  'Students': 'Famous scholars who learned from them',
+};
+
+function getDescription(category: Category, attribute: string): string {
+  if (category === 'prophet') {
+    return PROPHET_DESCRIPTIONS[attribute] || 'No description available';
+  }
+  if (category === 'sahaba') {
+    return SAHABA_DESCRIPTIONS[attribute] || 'No description available';
+  }
+  if (category === 'tabieen') {
+    return TABIEEN_DESCRIPTIONS[attribute] || 'No description available';
+  }
+  return 'No description available';
+}
 
 function AttributeTooltip({ attribute, category }: { attribute: string; category: Category }) {
   const [showTooltip, setShowTooltip] = useState(false);
-  const description = ATTRIBUTE_DESCRIPTIONS[category]?.[attribute] || '';
+  const description = getDescription(category, attribute);
 
   return (
     <div
@@ -58,7 +71,7 @@ function AttributeTooltip({ attribute, category }: { attribute: string; category
         {attribute}
       </div>
 
-      {showTooltip && description && (
+      {showTooltip && (
         <div
           className={cn(
             'absolute z-50',
