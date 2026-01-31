@@ -74,18 +74,24 @@ function AttributeTooltip({ attribute, category }: { attribute: string; category
       {showTooltip && (
         <div
           className={cn(
-            'absolute z-50',
+            'fixed z-[9999]',
             'w-48 sm:w-56',
-            'top-full left-1/2 -translate-x-1/2 mt-2',
-            'animate-tooltip-down'
+            'animate-tooltip-up'
           )}
+          style={{
+            left: '50%',
+            transform: 'translateX(-50%)',
+            bottom: 'calc(100% + 12px)',
+            position: 'absolute',
+          }}
         >
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[-1px]">
-            <div className="border-8 border-transparent border-b-[#1a1a1a]"></div>
-          </div>
-          <div className="rounded-xl bg-[#1a1a1a] border-2 border-[#FFE135]/30 p-3 shadow-xl">
+          <div className="rounded-xl bg-[#1a1a1a] border-2 border-[#FFE135]/30 p-3 shadow-2xl">
             <div className="text-[#FFE135] font-bold text-xs uppercase mb-1">{attribute}</div>
             <div className="text-white/80 text-xs leading-relaxed">{description}</div>
+          </div>
+          {/* Arrow pointing down */}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px]">
+            <div className="border-8 border-transparent border-t-[#1a1a1a]"></div>
           </div>
         </div>
       )}

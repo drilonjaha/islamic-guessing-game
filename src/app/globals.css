@@ -252,3 +252,19 @@ body {
 .animate-tooltip-down {
   animation: tooltipDown 0.15s ease-out forwards;
 }
+
+/* Tooltip animation - shows above */
+@keyframes tooltipUp {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.animate-tooltip-up {
+  animation: tooltipUp 0.15s ease-out forwards;
+}
