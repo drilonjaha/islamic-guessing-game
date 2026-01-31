@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Category } from '@/types';
 import { getAttributesForCategory } from '@/lib/constants';
 import { cn } from '@/lib/utils';
@@ -9,7 +9,7 @@ interface AttributeHeaderProps {
   category: Category;
 }
 
-// Descriptions for each attribute - using simple objects without special characters in values
+// Descriptions for each attribute
 const PROPHET_DESCRIPTIONS: Record<string, string> = {
   'Era': 'The time period when this prophet lived',
   'Region': 'The geographic area where they primarily lived and taught',
@@ -58,7 +58,30 @@ function getDescription(category: Category, attribute: string): string {
 
 function AttributeTooltip({ attribute, category }: { attribute: string; category: Category }) {
   const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+  const buttonRef = useRef<HTMLDivElement>(null);
   const description = getDescription(category, attribute);
+
+  useEffect(() => {
+    if (showTooltip && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const tooltipWidth = 256; // w-64 = 16rem = 256px
+
+      // Position above the button, centered
+      let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+
+      // Keep tooltip within viewport
+      if (left < 8) left = 8;
+      if (left + tooltipWidth > window.innerWidth - 8) {
+        left = window.innerWidth - tooltipWidth - 8;
+      }
+
+      setTooltipPos({
+        top: rect.top - 12, // 12px gap above button
+        left: left,
+      });
+    }
+  }, [showTooltip]);
 
   return (
     <>
@@ -70,6 +93,7 @@ function AttributeTooltip({ attribute, category }: { attribute: string; category
         />
       )}
       <div
+        ref={buttonRef}
         className="relative shrink-0 w-16 sm:w-20"
         onClick={() => setShowTooltip(!showTooltip)}
       >
@@ -84,27 +108,28 @@ function AttributeTooltip({ attribute, category }: { attribute: string; category
             <line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
         </div>
-
-        {showTooltip && (
-          <div
-            className={cn(
-              'absolute z-[9999]',
-              'w-52 sm:w-64',
-              'bottom-full left-1/2 -translate-x-1/2 mb-3',
-              'animate-tooltip-up'
-            )}
-          >
-            <div className="rounded-2xl bg-[#0D0D0D] border-2 border-[#FFE135] p-4 shadow-2xl">
-              <div className="text-[#FFE135] font-black text-sm uppercase mb-2">{attribute}</div>
-              <div className="text-white text-xs leading-relaxed">{description}</div>
-            </div>
-            {/* Arrow pointing down */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px]">
-              <div className="border-8 border-transparent border-t-[#FFE135]"></div>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Fixed position tooltip - renders outside overflow containers */}
+      {showTooltip && (
+        <div
+          className="fixed z-[9999] w-64 animate-tooltip-up"
+          style={{
+            top: tooltipPos.top,
+            left: tooltipPos.left,
+            transform: 'translateY(-100%)',
+          }}
+        >
+          <div className="rounded-2xl bg-[#0D0D0D] border-2 border-[#FFE135] p-4 shadow-2xl">
+            <div className="text-[#FFE135] font-black text-sm uppercase mb-2">{attribute}</div>
+            <div className="text-white text-xs leading-relaxed">{description}</div>
+          </div>
+          {/* Arrow pointing down */}
+          <div className="flex justify-center -mt-[1px]">
+            <div className="border-8 border-transparent border-t-[#FFE135]"></div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
