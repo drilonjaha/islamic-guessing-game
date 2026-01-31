@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useGameStore } from '@/store/gameStore';
 import { useStatsStore } from '@/store/statsStore';
+import { cn } from '@/lib/utils';
 import { GuessInput } from './GuessInput';
 import { GuessRow } from './GuessRow';
 import { CategorySelector } from './CategorySelector';
@@ -175,6 +176,28 @@ export function GameBoard() {
           guessedIds={guessedIds}
         />
       </div>
+
+      {/* Win/Lose Banner - shows after game ends */}
+      {isGameOver && (
+        <div className={cn(
+          'rounded-2xl p-4 text-center font-black uppercase tracking-wide',
+          gameStatus === 'won'
+            ? 'bg-gradient-to-r from-emerald-500/20 via-emerald-500/30 to-emerald-500/20 border-2 border-emerald-500 text-emerald-400'
+            : 'bg-gradient-to-r from-red-500/20 via-red-500/30 to-red-500/20 border-2 border-red-500 text-red-400'
+        )}>
+          {gameStatus === 'won' ? (
+            <div className="flex items-center justify-center gap-3">
+              <span className="text-2xl">🎉</span>
+              <span className="text-lg">You Won! The answer was {answer?.name}</span>
+              <span className="text-2xl">🎉</span>
+            </div>
+          ) : (
+            <div className="flex items-center justify-center gap-3">
+              <span>Game Over - The answer was <span className="text-white">{answer?.name}</span></span>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Classic Mode: Attribute Headers and Guesses */}
       {mode === 'classic' && (
