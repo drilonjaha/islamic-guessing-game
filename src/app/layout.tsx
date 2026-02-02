@@ -35,7 +35,13 @@ export default function RootLayout({
                 </span>
               </a>
               <div className="flex items-center gap-3">
-                <span className="badge badge-yellow animate-pulse-glow text-xs sm:text-sm">
+                <a
+                  href="/meso"
+                  className="px-4 py-2 rounded-full bg-gradient-to-r from-[#A855F7] to-[#9333EA] text-white font-bold text-sm hover:scale-105 transition-transform"
+                >
+                  Mëso
+                </a>
+                <span className="badge badge-yellow animate-pulse-glow text-xs sm:text-sm hidden sm:flex">
                   Unlimited Play!
                 </span>
               </div>

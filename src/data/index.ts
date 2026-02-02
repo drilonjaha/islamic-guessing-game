@@ -48,3 +48,6 @@ export function searchFigures(query: string, category?: Category): IslamicFigure
       f.nameArabic.includes(query)
   );
 }
+
+// Re-export learning content
+export * from './learning';

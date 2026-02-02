@@ -1,0 +1,9 @@
+export { FigureCard } from './FigureCard';
+export { FigureList } from './FigureList';
+export { ViewToggle } from './ViewToggle';
+export { BioSection } from './BioSection';
+export { InfoCards } from './InfoCards';
+export { Timeline } from './Timeline';
+export { AchievementsList } from './AchievementsList';
+export { RelationshipsList } from './RelationshipsList';
+export { FigureDetail } from './FigureDetail';
