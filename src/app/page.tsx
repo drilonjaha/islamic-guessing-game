@@ -224,6 +224,67 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Learn Section - Mëso */}
+      <section className="py-12 sm:py-20">
+        <div className="card-bold p-8 sm:p-12 relative overflow-hidden border-[#A855F7]/30 bg-gradient-to-br from-[#A855F7]/5 to-transparent">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#A855F7]/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#00D4FF]/10 rounded-full blur-3xl"></div>
+
+          <div className="relative flex flex-col lg:flex-row items-center gap-8">
+            {/* Text Content */}
+            <div className="flex-1 text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#A855F7] text-white font-bold text-sm mb-4 uppercase tracking-wide">
+                <span className="text-lg">📖</span>
+                E Re!
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-4 uppercase">
+                Mëso për <span className="text-[#A855F7]">Figurat Islame</span>
+              </h2>
+              <p className="text-zinc-300 mb-6 text-lg font-medium max-w-xl">
+                Lexo biografitë e plota të Profetëve, Sahabëve dhe Tabi&apos;inëve në gjuhën shqipe.
+                Zbulo jetën, arritjet dhe lidhjet e tyre.
+              </p>
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
+                <div className="flex items-center gap-2 text-zinc-400">
+                  <span className="text-[#FF4757] font-black">25</span> Profetë
+                </div>
+                <div className="flex items-center gap-2 text-zinc-400">
+                  <span className="text-[#00D4FF] font-black">221</span> Sahabë
+                </div>
+                <div className="flex items-center gap-2 text-zinc-400">
+                  <span className="text-[#A855F7] font-black">103</span> Tabi&apos;inë
+                </div>
+              </div>
+              <a
+                href="/meso"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-[#A855F7] to-[#9333EA] text-white font-bold text-lg hover:scale-105 transition-transform shadow-lg shadow-purple-500/30 uppercase tracking-wide"
+              >
+                Fillo të Mësosh
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+
+            {/* Preview Cards */}
+            <div className="flex-shrink-0 grid grid-cols-3 gap-3 max-w-xs">
+              <a href="/meso/profetet" className="card-bold p-4 text-center hover:border-[#FF4757] transition-colors group">
+                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">🌟</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase">Profetët</div>
+              </a>
+              <a href="/meso/sahabat" className="card-bold p-4 text-center hover:border-[#00D4FF] transition-colors group">
+                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">⭐</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase">Sahabët</div>
+              </a>
+              <a href="/meso/tabiinet" className="card-bold p-4 text-center hover:border-[#A855F7] transition-colors group">
+                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform">📚</div>
+                <div className="text-xs font-bold text-zinc-400 uppercase">Tabi&apos;inët</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA - Bold Yellow */}
       <section className="py-12 sm:py-20">
         <div className="card-bold p-8 sm:p-16 text-center relative overflow-hidden border-[#FFE135]/30">
