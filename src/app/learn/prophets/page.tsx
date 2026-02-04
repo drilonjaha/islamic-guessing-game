@@ -1,5 +1,5 @@
 import { prophets } from '@/data';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { FigureList } from '@/components/meso';
 
 export default function ProfetetPage() {
@@ -7,7 +7,7 @@ export default function ProfetetPage() {
     <FigureList
       figures={prophets}
       category="prophet"
-      title={albanianLabels.categories.prophet}
+      title={englishLabels.categories.prophet}
     />
   );
 }

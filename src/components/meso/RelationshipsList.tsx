@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { Relationship } from '@/types/learning';
-import { albanianLabels, getLearningContentById } from '@/data/learning';
+import { englishLabels, getLearningContentById } from '@/data/learning';
 import { getFigureById } from '@/data';
 import { getCategoryPath, getRelationshipTypeLabel } from '@/lib/learning-utils';
 
@@ -24,7 +24,7 @@ export function RelationshipsList({ relationships }: RelationshipsListProps) {
 
   return (
     <div className="card-bold p-6">
-      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{albanianLabels.sections.relationships}</h2>
+      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{englishLabels.sections.relationships}</h2>
       <div className="space-y-3">
         {relationships.map((relationship, index) => {
           const relatedFigure = getFigureById(relationship.figureId);

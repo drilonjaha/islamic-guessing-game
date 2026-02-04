@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { IslamicFigure, Category } from '@/types';
 import { LearningContent } from '@/types/learning';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { getCategoryPath } from '@/lib/learning-utils';
 
 interface FigureCardProps {
@@ -62,7 +62,7 @@ export function FigureCard({ figure, learningContent, view }: FigureCardProps) {
           <div className="flex items-center gap-2">
             {!isComplete && (
               <span className="text-xs text-zinc-600">
-                {albanianLabels.status.incomplete}
+                {englishLabels.status.incomplete}
               </span>
             )}
             <svg
@@ -94,7 +94,7 @@ export function FigureCard({ figure, learningContent, view }: FigureCardProps) {
             </div>
             {!isComplete && (
               <span className="text-xs text-zinc-600 whitespace-nowrap">
-                {albanianLabels.status.incomplete}
+                {englishLabels.status.incomplete}
               </span>
             )}
           </div>
@@ -106,7 +106,7 @@ export function FigureCard({ figure, learningContent, view }: FigureCardProps) {
             </p>
           ) : (
             <p className="text-sm text-zinc-600 italic">
-              {albanianLabels.status.comingSoon}
+              {englishLabels.status.comingSoon}
             </p>
           )}
 
@@ -119,7 +119,7 @@ export function FigureCard({ figure, learningContent, view }: FigureCardProps) {
 
           {/* Read more */}
           <div className="flex items-center gap-1 text-sm text-zinc-500 group-hover:text-[#FFE135] transition-colors">
-            <span>{albanianLabels.figureCard.viewProfile}</span>
+            <span>{englishLabels.figureCard.viewProfile}</span>
             <svg
               className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
               fill="none"

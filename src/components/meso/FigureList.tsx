@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { IslamicFigure, Category } from '@/types';
 import { LearningContent } from '@/types/learning';
-import { albanianLabels, getLearningContentById } from '@/data/learning';
+import { englishLabels, getLearningContentById } from '@/data/learning';
 import { FigureCard } from './FigureCard';
 import { ViewToggle } from './ViewToggle';
 import { searchFiguresByName, sortFiguresByName, sortFiguresByEra } from '@/lib/learning-utils';
@@ -58,7 +58,7 @@ export function FigureList({ figures, category, title }: FigureListProps) {
         <div>
           <h1 className="text-3xl sm:text-4xl font-black text-chunky">{title}</h1>
           <p className="text-zinc-500 mt-1">
-            {filteredFigures.length} {albanianLabels.landing.figuresCount}
+            {filteredFigures.length} {englishLabels.landing.figuresCount}
           </p>
         </div>
         <ViewToggle view={view} onViewChange={setView} />
@@ -72,7 +72,7 @@ export function FigureList({ figures, category, title }: FigureListProps) {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={albanianLabels.common.search + '...'}
+            placeholder={englishLabels.common.search + '...'}
             className="w-full bg-zinc-800/50 border-2 border-zinc-700 rounded-xl px-4 py-2.5 pl-10 text-white placeholder-zinc-500 focus:border-[#FFE135] focus:outline-none transition-colors"
           />
           <svg
@@ -104,7 +104,7 @@ export function FigureList({ figures, category, title }: FigureListProps) {
       {/* Results */}
       {filteredFigures.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-zinc-500">{albanianLabels.common.noResults}</p>
+          <p className="text-zinc-500">{englishLabels.common.noResults}</p>
         </div>
       ) : view === 'grid' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -4,90 +4,90 @@ export const eras: Era[] = [
   {
     id: 'beginning',
     name: 'Beginning of Time',
-    nameAlbanian: 'Fillimi i Kohës',
+    nameAlbanian: 'Beginning of Time',
     startYear: -10000,
     endYear: -4000,
-    description: 'Krijimi i Ademit a.s. dhe fillimi i njerëzimit',
+    description: 'Creation of Adam (AS) and the beginning of humanity',
   },
   {
     id: 'prehistory',
     name: 'Pre-history',
-    nameAlbanian: 'Parahistoria',
+    nameAlbanian: 'Pre-history',
     startYear: -4000,
     endYear: -2500,
-    description: 'Koha e Nuhut a.s. dhe profetëve të hershëm',
+    description: 'Time of Nuh (AS) and early prophets',
   },
   {
     id: 'ancient-mesopotamia',
     name: 'Ancient Mesopotamia',
-    nameAlbanian: 'Mesopotamia e Lashtë',
+    nameAlbanian: 'Ancient Mesopotamia',
     startYear: -2500,
     endYear: -1500,
-    description: 'Koha e Ibrahimit a.s. dhe Lutit a.s.',
+    description: 'Time of Ibrahim (AS) and Lut (AS)',
   },
   {
     id: 'ancient-egypt',
     name: 'Ancient Egypt',
-    nameAlbanian: 'Egjipti i Lashtë',
+    nameAlbanian: 'Ancient Egypt',
     startYear: -1500,
     endYear: -1200,
-    description: 'Koha e Musait a.s. dhe çlirimit të Beni Israilëve',
+    description: 'Time of Musa (AS) and liberation of Bani Israel',
   },
   {
     id: 'israelite-kingdom',
     name: 'Israelite Kingdom',
-    nameAlbanian: 'Mbretëria Izraelite',
+    nameAlbanian: 'Israelite Kingdom',
     startYear: -1200,
     endYear: -500,
-    description: 'Koha e Davudit a.s., Sulejmanit a.s. dhe profetëve të Beni Israilëve',
+    description: 'Time of Dawud (AS), Sulayman (AS), and prophets of Bani Israel',
   },
   {
     id: 'late-israelite',
     name: 'Late Israelite Period',
-    nameAlbanian: 'Periudha e Vonshme Izraelite',
+    nameAlbanian: 'Late Israelite Period',
     startYear: -500,
     endYear: 1,
-    description: 'Koha e Zekerijas a.s. dhe Jahjas a.s.',
+    description: 'Time of Zakariya (AS) and Yahya (AS)',
   },
   {
     id: 'early-ce',
     name: 'Early Common Era',
-    nameAlbanian: 'Era e Hershme e Përbashkët',
+    nameAlbanian: 'Early Common Era',
     startYear: 1,
     endYear: 570,
-    description: 'Koha e Isait a.s. dhe periudha para Islamit',
+    description: 'Time of Isa (AS) and pre-Islamic period',
   },
   {
     id: 'prophetic-era',
     name: 'Prophetic Era',
-    nameAlbanian: 'Epoka Profetike',
+    nameAlbanian: 'Prophetic Era',
     startYear: 570,
     endYear: 632,
-    description: 'Jeta e Profetit Muhamed ﷺ',
+    description: 'Life of Prophet Muhammad ﷺ',
   },
   {
     id: 'rashidun',
     name: 'Rashidun Caliphate',
-    nameAlbanian: 'Kalifati Rashidun',
+    nameAlbanian: 'Rashidun Caliphate',
     startYear: 632,
     endYear: 661,
-    description: 'Koha e Katër Kalifëve të Drejtë',
+    description: 'Time of the Four Rightly Guided Caliphs',
   },
   {
     id: 'early-umayyad',
     name: 'Early Umayyad',
-    nameAlbanian: 'Umejadët e Hershëm',
+    nameAlbanian: 'Early Umayyad',
     startYear: 661,
     endYear: 720,
-    description: 'Fillimi i Kalifatit Umejad',
+    description: 'Beginning of the Umayyad Caliphate',
   },
   {
     id: 'late-umayyad',
     name: 'Late Umayyad',
-    nameAlbanian: 'Umejadët e Vonshëm',
+    nameAlbanian: 'Late Umayyad',
     startYear: 720,
     endYear: 750,
-    description: 'Periudha e vonë e Kalifatit Umejad',
+    description: 'Late period of the Umayyad Caliphate',
   },
 ];
 
@@ -99,7 +99,12 @@ export function getEraByYear(year: number): Era | undefined {
   return eras.find(era => year >= era.startYear && year < era.endYear);
 }
 
-export function getEraNameAlbanian(eraName: string): string {
+export function getEraNameEnglish(eraName: string): string {
   const era = eras.find(e => e.name.toLowerCase() === eraName.toLowerCase());
-  return era?.nameAlbanian || eraName;
+  return era?.name || eraName;
+}
+
+// Keep for backward compatibility
+export function getEraNameAlbanian(eraName: string): string {
+  return getEraNameEnglish(eraName);
 }

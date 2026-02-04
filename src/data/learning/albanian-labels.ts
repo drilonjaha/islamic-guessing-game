@@ -1,4 +1,4 @@
-export const albanianLabels = {
+export const englishLabels = {
   // Navigation
   nav: {
     home: 'Ballina',
@@ -185,4 +185,4 @@ export const albanianLabels = {
   },
 } as const;
 
-export type AlbanianLabels = typeof albanianLabels;
+export type AlbanianLabels = typeof englishLabels;

@@ -7,8 +7,8 @@ import { tabieenLearning, getTabieenLearningById } from './tabieen-learning';
 export { prophetsLearning } from './prophets-learning';
 export { sahabasLearning } from './sahabas-learning';
 export { tabieenLearning } from './tabieen-learning';
-export { albanianLabels } from './albanian-labels';
-export { eras, getEraById, getEraByYear, getEraNameAlbanian } from './eras';
+export { englishLabels } from './english-labels';
+export { eras, getEraById, getEraByYear, getEraNameEnglish } from './eras';
 
 export function getLearningContentById(id: string): LearningContent | undefined {
   return getProphetLearningById(id) || getSahabaLearningById(id) || getTabieenLearningById(id);

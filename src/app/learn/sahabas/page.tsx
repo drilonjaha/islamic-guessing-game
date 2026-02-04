@@ -1,5 +1,5 @@
 import { sahabas } from '@/data';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { FigureList } from '@/components/meso';
 
 export default function SahabatPage() {
@@ -7,7 +7,7 @@ export default function SahabatPage() {
     <FigureList
       figures={sahabas}
       category="sahaba"
-      title={albanianLabels.categories.sahaba}
+      title={englishLabels.categories.sahaba}
     />
   );
 }

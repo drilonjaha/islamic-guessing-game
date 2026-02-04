@@ -1,7 +1,7 @@
 'use client';
 
 import { TimelineData } from '@/types/learning';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { formatYear } from '@/lib/learning-utils';
 
 interface TimelineProps {
@@ -16,9 +16,9 @@ export function Timeline({ timeline, isAH = false }: TimelineProps) {
   if (majorEvents.length === 0 && !birthYear && !deathYear) {
     return (
       <div className="card-bold p-6">
-        <h2 className="text-xl font-bold mb-4">{albanianLabels.sections.timeline}</h2>
+        <h2 className="text-xl font-bold mb-4">{englishLabels.sections.timeline}</h2>
         <div className="flex items-center gap-2 text-zinc-500">
-          <span className="text-sm">{albanianLabels.prophetAttributes.era}:</span>
+          <span className="text-sm">{englishLabels.prophetAttributes.era}:</span>
           <span className="text-white">{era}</span>
         </div>
       </div>
@@ -30,7 +30,7 @@ export function Timeline({ timeline, isAH = false }: TimelineProps) {
 
   return (
     <div className="card-bold p-6">
-      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{albanianLabels.sections.timeline}</h2>
+      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{englishLabels.sections.timeline}</h2>
 
       {/* Era badge */}
       <div className="mb-4">
@@ -44,14 +44,14 @@ export function Timeline({ timeline, isAH = false }: TimelineProps) {
         <div className="flex items-center gap-4 mb-4 text-sm">
           {birthYear && (
             <div>
-              <span className="text-zinc-500">{albanianLabels.timeline.birth}: </span>
+              <span className="text-zinc-500">{englishLabels.timeline.birth}: </span>
               <span className="text-white font-medium">{formatYear(birthYear, isAH)}</span>
             </div>
           )}
           {birthYear && deathYear && <span className="text-zinc-600">—</span>}
           {deathYear && (
             <div>
-              <span className="text-zinc-500">{albanianLabels.timeline.death}: </span>
+              <span className="text-zinc-500">{englishLabels.timeline.death}: </span>
               <span className="text-white font-medium">{formatYear(deathYear, isAH)}</span>
             </div>
           )}

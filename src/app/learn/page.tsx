@@ -1,35 +1,35 @@
 import Link from 'next/link';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { prophets, sahabas, tabieen } from '@/data';
 
-export default function MesoLandingPage() {
+export default function LearnLandingPage() {
   const categories = [
     {
       id: 'prophet',
-      title: albanianLabels.categories.prophet,
-      description: 'Zbulo jetën e profetëve të Allahut nga Ademi deri te Muhamedi ﷺ',
+      title: englishLabels.categories.prophet,
+      description: 'Discover the lives of Allah\'s prophets from Adam to Muhammad ﷺ',
       count: prophets.length,
-      href: '/meso/profetet',
+      href: '/learn/prophets',
       gradient: 'from-[#FF4757] to-[#FF6B6B]',
       shadow: 'shadow-red-500/30',
       icon: '🌟',
     },
     {
       id: 'sahaba',
-      title: albanianLabels.categories.sahaba,
-      description: 'Lexo për shokët e Profetit ﷺ që sakrifikuan gjithçka për Islamin',
+      title: englishLabels.categories.sahaba,
+      description: 'Read about the companions of the Prophet ﷺ who sacrificed everything for Islam',
       count: sahabas.length,
-      href: '/meso/sahabat',
+      href: '/learn/sahabas',
       gradient: 'from-[#00D4FF] to-[#00B4D8]',
       shadow: 'shadow-cyan-500/30',
       icon: '⭐',
     },
     {
       id: 'tabieen',
-      title: albanianLabels.categories.tabieen,
-      description: 'Njihu me nxënësit e sahabëve që ruajtën dijen islame',
+      title: englishLabels.categories.tabieen,
+      description: 'Learn about the students of the companions who preserved Islamic knowledge',
       count: tabieen.length,
-      href: '/meso/tabiinet',
+      href: '/learn/tabieen',
       gradient: 'from-[#A855F7] to-[#9333EA]',
       shadow: 'shadow-purple-500/30',
       icon: '📚',
@@ -41,13 +41,13 @@ export default function MesoLandingPage() {
       {/* Hero Section */}
       <div className="text-center space-y-4 py-8">
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-chunky">
-          {albanianLabels.landing.title}
+          {englishLabels.landing.title}
         </h1>
         <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto">
-          {albanianLabels.landing.subtitle}
+          {englishLabels.landing.subtitle}
         </p>
         <p className="text-sm text-zinc-500 max-w-xl mx-auto">
-          {albanianLabels.landing.description}
+          {englishLabels.landing.description}
         </p>
       </div>
 
@@ -77,13 +77,13 @@ export default function MesoLandingPage() {
               {/* Count Badge */}
               <div className="flex items-center gap-2">
                 <span className={`px-3 py-1 rounded-full text-sm font-bold bg-gradient-to-r ${category.gradient} text-white`}>
-                  {category.count} {albanianLabels.landing.figuresCount}
+                  {category.count} {englishLabels.landing.figuresCount}
                 </span>
               </div>
 
               {/* Arrow */}
               <div className="flex items-center gap-2 text-zinc-500 group-hover:text-white transition-colors">
-                <span className="font-medium">{albanianLabels.figureCard.readMore}</span>
+                <span className="font-medium">{englishLabels.figureCard.readMore}</span>
                 <svg
                   className="w-5 h-5 transform group-hover:translate-x-1 transition-transform"
                   fill="none"
@@ -102,15 +102,15 @@ export default function MesoLandingPage() {
       <div className="grid grid-cols-3 gap-4 py-8">
         <div className="text-center">
           <div className="text-3xl sm:text-4xl font-black text-[#FF4757]">{prophets.length}</div>
-          <div className="text-sm text-zinc-500">{albanianLabels.categories.prophet}</div>
+          <div className="text-sm text-zinc-500">{englishLabels.categories.prophet}</div>
         </div>
         <div className="text-center">
           <div className="text-3xl sm:text-4xl font-black text-[#00D4FF]">{sahabas.length}</div>
-          <div className="text-sm text-zinc-500">{albanianLabels.categories.sahaba}</div>
+          <div className="text-sm text-zinc-500">{englishLabels.categories.sahaba}</div>
         </div>
         <div className="text-center">
           <div className="text-3xl sm:text-4xl font-black text-[#A855F7]">{tabieen.length}</div>
-          <div className="text-sm text-zinc-500">{albanianLabels.categories.tabieen}</div>
+          <div className="text-sm text-zinc-500">{englishLabels.categories.tabieen}</div>
         </div>
       </div>
     </div>

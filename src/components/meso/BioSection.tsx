@@ -1,6 +1,6 @@
 'use client';
 
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 
 interface BioSectionProps {
   summary: string;
@@ -11,15 +11,15 @@ export function BioSection({ summary, paragraphs }: BioSectionProps) {
   if (!summary && paragraphs.length === 0) {
     return (
       <div className="card-bold p-6">
-        <h2 className="text-xl font-bold mb-4">{albanianLabels.sections.biography}</h2>
-        <p className="text-zinc-500 italic">{albanianLabels.status.comingSoon}</p>
+        <h2 className="text-xl font-bold mb-4">{englishLabels.sections.biography}</h2>
+        <p className="text-zinc-500 italic">{englishLabels.status.comingSoon}</p>
       </div>
     );
   }
 
   return (
     <div className="card-bold p-6">
-      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{albanianLabels.sections.biography}</h2>
+      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{englishLabels.sections.biography}</h2>
 
       {/* Summary as lead paragraph */}
       {summary && (

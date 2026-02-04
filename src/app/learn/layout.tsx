@@ -2,15 +2,15 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 
-export default function MesoLayout({
+export default function LearnLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isLanding = pathname === '/meso';
+  const isLanding = pathname === '/learn';
 
   return (
     <div className="min-h-screen">
@@ -18,36 +18,36 @@ export default function MesoLayout({
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-zinc-400">
           <Link href="/" className="hover:text-[#FFE135] transition-colors">
-            {albanianLabels.nav.home}
+            {englishLabels.nav.home}
           </Link>
           <span>/</span>
           <Link
-            href="/meso"
+            href="/learn"
             className={`transition-colors ${isLanding ? 'text-[#FFE135]' : 'hover:text-[#FFE135]'}`}
           >
-            {albanianLabels.nav.learn}
+            {englishLabels.nav.learn}
           </Link>
-          {!isLanding && pathname.includes('/profetet') && (
+          {!isLanding && pathname.includes('/prophets') && (
             <>
               <span>/</span>
-              <Link href="/meso/profetet" className="hover:text-[#FFE135] transition-colors">
-                {albanianLabels.categories.prophet}
+              <Link href="/learn/prophets" className="hover:text-[#FFE135] transition-colors">
+                {englishLabels.categories.prophet}
               </Link>
             </>
           )}
-          {!isLanding && pathname.includes('/sahabat') && (
+          {!isLanding && pathname.includes('/sahabas') && (
             <>
               <span>/</span>
-              <Link href="/meso/sahabat" className="hover:text-[#FFE135] transition-colors">
-                {albanianLabels.categories.sahaba}
+              <Link href="/learn/sahabas" className="hover:text-[#FFE135] transition-colors">
+                {englishLabels.categories.sahaba}
               </Link>
             </>
           )}
-          {!isLanding && pathname.includes('/tabiinet') && (
+          {!isLanding && pathname.includes('/tabieen') && (
             <>
               <span>/</span>
-              <Link href="/meso/tabiinet" className="hover:text-[#FFE135] transition-colors">
-                {albanianLabels.categories.tabieen}
+              <Link href="/learn/tabieen" className="hover:text-[#FFE135] transition-colors">
+                {englishLabels.categories.tabieen}
               </Link>
             </>
           )}

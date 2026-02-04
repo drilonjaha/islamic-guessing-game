@@ -36,10 +36,10 @@ export default function RootLayout({
               </a>
               <div className="flex items-center gap-3">
                 <a
-                  href="/meso"
+                  href="/learn"
                   className="px-4 py-2 rounded-full bg-gradient-to-r from-[#A855F7] to-[#9333EA] text-white font-bold text-sm hover:scale-105 transition-transform"
                 >
-                  Mëso
+                  Learn
                 </a>
                 <span className="badge badge-yellow animate-pulse-glow text-xs sm:text-sm hidden sm:flex">
                   Unlimited Play!

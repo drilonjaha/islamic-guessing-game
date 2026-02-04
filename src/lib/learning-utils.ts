@@ -1,33 +1,33 @@
 import { Category, IslamicFigure } from '@/types';
 import { LearningContent } from '@/types/learning';
-import { albanianLabels } from '@/data/learning/albanian-labels';
+import { englishLabels } from '@/data/learning/english-labels';
 
 export function getCategoryLabel(category: Category): string {
-  return albanianLabels.categories[category];
+  return englishLabels.categories[category];
 }
 
 export function getCategorySingularLabel(category: Category): string {
-  return albanianLabels.categorySingular[category];
+  return englishLabels.categorySingular[category];
 }
 
 export function getCategoryPath(category: Category): string {
   switch (category) {
     case 'prophet':
-      return 'profetet';
+      return 'prophets';
     case 'sahaba':
-      return 'sahabat';
+      return 'sahabas';
     case 'tabieen':
-      return 'tabiinet';
+      return 'tabieen';
   }
 }
 
 export function getCategoryFromPath(path: string): Category | null {
   switch (path) {
-    case 'profetet':
+    case 'prophets':
       return 'prophet';
-    case 'sahabat':
+    case 'sahabas':
       return 'sahaba';
-    case 'tabiinet':
+    case 'tabieen':
       return 'tabieen';
     default:
       return null;
@@ -35,45 +35,45 @@ export function getCategoryFromPath(path: string): Category | null {
 }
 
 export function formatBooleanValue(value: boolean): string {
-  return value ? albanianLabels.boolean.yes : albanianLabels.boolean.no;
+  return value ? englishLabels.boolean.yes : englishLabels.boolean.no;
 }
 
 export function formatYear(year: number | undefined, isAH: boolean = false): string {
   if (year === undefined) return '';
 
   if (isAH) {
-    return `${year} ${albanianLabels.timeline.ah}`;
+    return `${year} ${englishLabels.timeline.ah}`;
   }
 
   if (year < 0) {
-    return `${Math.abs(year)} ${albanianLabels.timeline.bce}`;
+    return `${Math.abs(year)} ${englishLabels.timeline.bce}`;
   }
 
-  return `${year} ${albanianLabels.timeline.ce}`;
+  return `${year} ${englishLabels.timeline.ce}`;
 }
 
 export function getConversionPeriodLabel(period: string): string {
-  return albanianLabels.conversionPeriods[period as keyof typeof albanianLabels.conversionPeriods] || period;
+  return englishLabels.conversionPeriods[period as keyof typeof englishLabels.conversionPeriods] || period;
 }
 
 export function getProphetRelationLabel(relation: string): string {
-  return albanianLabels.prophetRelations[relation as keyof typeof albanianLabels.prophetRelations] || relation;
+  return englishLabels.prophetRelations[relation as keyof typeof englishLabels.prophetRelations] || relation;
 }
 
 export function getGenerationLabel(generation: string): string {
-  return albanianLabels.generations[generation as keyof typeof albanianLabels.generations] || generation;
+  return englishLabels.generations[generation as keyof typeof englishLabels.generations] || generation;
 }
 
 export function getSpecialtyLabel(specialty: string): string {
-  return albanianLabels.specialties[specialty as keyof typeof albanianLabels.specialties] || specialty;
+  return englishLabels.specialties[specialty as keyof typeof englishLabels.specialties] || specialty;
 }
 
 export function getRoleLabel(role: string): string {
-  return albanianLabels.roles[role as keyof typeof albanianLabels.roles] || role;
+  return englishLabels.roles[role as keyof typeof englishLabels.roles] || role;
 }
 
 export function getRelationshipTypeLabel(type: string): string {
-  return albanianLabels.relationshipTypes[type as keyof typeof albanianLabels.relationshipTypes] || type;
+  return englishLabels.relationshipTypes[type as keyof typeof englishLabels.relationshipTypes] || type;
 }
 
 export function createPlaceholderContent(figure: IslamicFigure): LearningContent {

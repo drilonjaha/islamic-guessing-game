@@ -1,7 +1,7 @@
 'use client';
 
 import { Achievement } from '@/types/learning';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 
 interface AchievementsListProps {
   achievements: Achievement[];
@@ -14,7 +14,7 @@ export function AchievementsList({ achievements }: AchievementsListProps) {
 
   return (
     <div className="card-bold p-6">
-      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{albanianLabels.sections.achievements}</h2>
+      <h2 className="text-xl font-bold mb-4 text-[#FFE135]">{englishLabels.sections.achievements}</h2>
       <div className="grid gap-3">
         {achievements.map((achievement, index) => (
           <div

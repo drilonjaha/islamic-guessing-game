@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { IslamicFigure, Category } from '@/types';
 import { LearningContent } from '@/types/learning';
-import { albanianLabels } from '@/data/learning';
+import { englishLabels } from '@/data/learning';
 import { getCategoryPath, getCategoryLabel, createPlaceholderContent } from '@/lib/learning-utils';
 import { BioSection } from './BioSection';
 import { InfoCards } from './InfoCards';
@@ -56,7 +56,7 @@ export function FigureDetail({ figure, learningContent }: FigureDetailProps) {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          <span>{albanianLabels.nav.backToList}</span>
+          <span>{englishLabels.nav.backToList}</span>
         </Link>
       </div>
 
@@ -64,7 +64,7 @@ export function FigureDetail({ figure, learningContent }: FigureDetailProps) {
       {!content.isComplete && (
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-4 text-center">
           <p className="text-zinc-400">
-            {albanianLabels.status.comingSoon}
+            {englishLabels.status.comingSoon}
           </p>
         </div>
       )}
