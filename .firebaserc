@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "islamic-simple-game"
-  }
+  },
+  "targets": {
+    "islamic-simple-game": {
+      "hosting": {
+        "english": [
+          "english-knowyour-game"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
